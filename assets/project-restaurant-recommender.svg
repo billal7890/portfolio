@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Restaurant recommender system visual">
+  <rect width="900" height="540" fill="#071426"/>
+  <circle cx="238" cy="210" r="32" fill="#55d6ff"/>
+  <circle cx="355" cy="155" r="24" fill="#62f0bf"/>
+  <circle cx="475" cy="220" r="30" fill="#c8a642"/>
+  <circle cx="610" cy="150" r="26" fill="#55d6ff"/>
+  <circle cx="678" cy="282" r="36" fill="#62f0bf"/>
+  <circle cx="340" cy="310" r="28" fill="#c8a642"/>
+  <path d="M238 210 355 155 475 220 610 150 678 282 340 310 238 210M475 220 340 310M355 155 340 310" stroke="#224869" stroke-width="4" fill="none"/>
+  <rect x="155" y="380" width="590" height="46" fill="#0b1f35" stroke="#55d6ff"/>
+  <path d="M185 403h510" stroke="#62f0bf" stroke-width="8"/>
+  <text x="82" y="92" fill="#55d6ff" font-family="Arial" font-size="24" font-weight="700">RECOMMENDER SYSTEMS</text>
+  <text x="82" y="455" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">Restaurant Recommendation Engine</text>
+  <text x="82" y="492" fill="#a7c2dc" font-family="Arial" font-size="20">hybrid scoring · social graph · city-filtered results</text>
+</svg>

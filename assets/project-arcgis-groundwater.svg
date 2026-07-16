@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="ArcGIS groundwater web map visual">
+  <rect width="900" height="540" fill="#071426"/>
+  <path d="M140 120 310 90 495 135 740 95 800 260 710 410 468 450 245 405 100 275Z" fill="#0b1f35" stroke="#55d6ff" stroke-width="4"/>
+  <path d="M160 260c95-80 200-92 320-40s206 25 292-42M165 340c124-45 238-50 348 8s180 42 252-22" stroke="#16324e" stroke-width="8" fill="none"/>
+  <path d="M260 210l22 42h-44zM405 302l22 42h-44zM595 205l22 42h-44zM680 340l22 42h-44z" fill="#c8a642" stroke="#edf6ff" stroke-width="2"/>
+  <circle cx="260" cy="210" r="10" fill="#62f0bf"/><circle cx="405" cy="302" r="10" fill="#62f0bf"/><circle cx="595" cy="205" r="10" fill="#62f0bf"/><circle cx="680" cy="340" r="10" fill="#62f0bf"/>
+  <text x="80" y="82" fill="#55d6ff" font-family="Arial" font-size="24" font-weight="700">GIS / WEB MAPPING</text>
+  <text x="80" y="455" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">ArcGIS Groundwater Map</text>
+  <text x="80" y="492" fill="#a7c2dc" font-family="Arial" font-size="20">hosted layers · symbology · pop-ups · instant app</text>
+</svg>

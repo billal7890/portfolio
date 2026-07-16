@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Admin | Billal Javed</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="admin">
+    <header class="site-header admin-header">
+      <div class="brand-wrap">
+        <a class="brand" href="index.html">Billal Javed</a>
+        <a class="admin-gate" href="admin.html" aria-label="Admin login" title="Admin login"></a>
+      </div>
+      <div class="social-actions">
+        <a class="social-icon github-icon" href="https://github.com/billal7890" data-social="github" target="_blank" rel="noreferrer" aria-label="GitHub"></a>
+        <a class="social-icon linkedin-icon" href="https://www.linkedin.com/in/billaljaved" data-social="linkedin" target="_blank" rel="noreferrer" aria-label="LinkedIn"></a>
+        <a class="social-icon handshake-icon" href="https://udel.joinhandshake.com/profiles/billaljaved" data-social="handshake" target="_blank" rel="noreferrer" aria-label="Handshake"></a>
+      </div>
+    </header>
+
+    <main>
+      <section class="admin section-block">
+        <div class="admin-login login-only" id="adminLogin">
+          <p class="eyebrow">Admin Login</p>
+          <h1>Unlock Website Editor</h1>
+          <input id="adminEmail" type="email" placeholder="Admin email" />
+          <input id="adminPassword" type="password" placeholder="Password" />
+          <button class="button primary" id="adminLoginButton" type="button">Login</button>
+          <button class="link-button" id="forgotPasswordButton" type="button">Forgot password?</button>
+          <div class="password-reset" id="passwordResetPanel" hidden>
+            <input id="resetEmail" type="email" placeholder="Recovery email" />
+            <input id="newAdminPassword" type="password" placeholder="New password" />
+            <button class="button primary" id="resetPasswordButton" type="button">Update Password</button>
+          </div>
+          <p class="form-note error" id="adminLoginError" hidden>Incorrect admin credentials.</p>
+          <p class="form-note" id="passwordResetNote" hidden>Password updated in this browser.</p>
+        </div>
+
+        <div class="admin-panel" id="adminPanel" hidden>
+          <div class="section-heading reveal">
+            <p class="eyebrow">Admin Dashboard</p>
+            <h1>Manage the entire website.</h1>
+            <p>Preview pages, edit content, update layout settings, manage projects/blogs, review analytics, and update files. Static demo data is stored in localStorage.</p>
+          </div>
+
+          <nav class="admin-tabs" aria-label="Admin editor sections">
+            <button class="active" type="button" data-admin-tab="preview">Preview</button>
+            <button type="button" data-admin-tab="site">Site</button>
+            <button type="button" data-admin-tab="about">About</button>
+            <button type="button" data-admin-tab="projects">Projects</button>
+            <button type="button" data-admin-tab="certifications">Certifications</button>
+            <button type="button" data-admin-tab="sections">Sections</button>
+            <button type="button" data-admin-tab="blog">Blog</button>
+            <button type="button" data-admin-tab="messages">Messages</button>
+            <button type="button" data-admin-tab="security">Security</button>
+          </nav>
+
+          <details class="admin-page" data-admin-page="preview" open>
+            <summary>Website Preview</summary>
+            <div class="website-preview-grid">
+              <iframe class="site-preview-frame" src="index.html?adminPreview=1" title="Website preview"></iframe>
+              <div class="preview-links">
+                <a class="button secondary" href="index.html" target="_blank">Home</a>
+                <a class="button secondary" href="about.html" target="_blank">About</a>
+                <a class="button secondary" href="portfolio.html" target="_blank">Portfolio</a>
+                <a class="button secondary" href="blog.html" target="_blank">Blog</a>
+                <a class="button secondary" href="contact.html" target="_blank">Contact</a>
+              </div>
+            </div>
+            <form class="admin-form text-editor-form" id="textEditorForm">
+              <label>Text area
+                <select name="target">
+                  <option value="homeTitle">Home headline</option>
+                  <option value="homeIntro">Home introduction</option>
+                  <option value="aboutText">About me paragraph</option>
+                  <option value="globalText">All body text</option>
+                  <option value="allHeadings">All headings</option>
+                  <option value="navigationText">Navigation text</option>
+                  <option value="buttonText">Button text</option>
+                </select>
+              </label>
+              <label>Alignment
+                <select name="align">
+                  <option value="left">Left</option>
+                  <option value="center">Center</option>
+                  <option value="right">Right</option>
+                </select>
+              </label>
+              <label>Font
+                <select name="fontFamily">
+                  <option value="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif">Inter / System</option>
+                  <option value="Arial, sans-serif">Arial</option>
+                  <option value="Georgia, serif">Georgia</option>
+                  <option value="'Times New Roman', serif">Times New Roman</option>
+                  <option value="'Courier New', monospace">Courier New</option>
+                </select>
+              </label>
+              <label>Size
+                <input name="fontSize" type="range" min="14" max="54" step="1" />
+              </label>
+              <label>Weight
+                <select name="fontWeight">
+                  <option value="400">Regular</option>
+                  <option value="600">Semi bold</option>
+                  <option value="700">Bold</option>
+                  <option value="800">Extra bold</option>
+                </select>
+              </label>
+              <label>Style
+                <select name="fontStyle">
+                  <option value="normal">Normal</option>
+                  <option value="italic">Italic</option>
+                </select>
+              </label>
+              <label>Decoration
+                <select name="textDecoration">
+                  <option value="none">None</option>
+                  <option value="underline">Underline</option>
+                </select>
+              </label>
+              <label>Line height
+                <input name="lineHeight" type="range" min="1" max="2" step="0.05" />
+              </label>
+              <label>Color
+                <input name="color" type="color" />
+              </label>
+              <textarea name="content" placeholder="Edit selected website text. Style-only groups keep their existing wording."></textarea>
+              <button class="button primary" type="submit">Save Text Style</button>
+              <button class="button secondary" id="resetTextStyle" type="button">Reset Selected Style</button>
+            </form>
+          </details>
+
+          <div class="admin-stats" id="adminStats"></div>
+
+          <details class="admin-page" data-admin-page="site" open>
+            <summary>Layout, Profile, Resume, Social Links, and Page Text</summary>
+            <form class="admin-form" id="siteForm">
+              <label>Profile picture <input id="profileUpload" name="profileImage" type="file" accept="image/*" /></label>
+              <div class="crop-tool" id="profileCropTool">
+                <div class="crop-preview-wrap"><canvas id="profileCropCanvas" width="420" height="420"></canvas></div>
+                <div class="crop-controls">
+                  <label>Zoom <input id="cropZoom" type="range" min="1" max="3" step="0.01" value="1.35" /></label>
+                  <label>Move X <input id="cropX" type="range" min="-220" max="220" step="1" value="0" /></label>
+                  <label>Move Y <input id="cropY" type="range" min="-220" max="220" step="1" value="-30" /></label>
+                  <button class="button secondary" id="applyProfileCrop" type="button">Apply Crop</button>
+                  <p class="form-note" id="cropNote">Upload a picture, adjust crop, then apply before saving.</p>
+                </div>
+              </div>
+              <label>Resume PDF <input name="resumeFile" type="file" accept=".pdf,application/pdf" /></label>
+              <p class="form-note" id="resumeTime">Resume not uploaded yet.</p>
+              <input name="github" placeholder="GitHub URL" />
+              <input name="linkedin" placeholder="LinkedIn URL" />
+              <input name="handshake" placeholder="Handshake URL" />
+              <select name="layoutDensity">
+                <option value="comfortable">Comfortable spacing</option>
+                <option value="compact">Compact spacing</option>
+                <option value="spacious">Spacious spacing</option>
+              </select>
+              <label>Card radius <input name="cardRadius" type="range" min="4" max="18" step="1" /></label>
+              <label class="checkbox-label"><input name="animations" type="checkbox" /> Enable animations</label>
+              <input name="homeTitle" placeholder="Home headline" />
+              <textarea name="homeIntro" placeholder="Home introduction"></textarea>
+              <textarea name="aboutText" placeholder="About Me text"></textarea>
+              <button class="button primary" type="submit">Save Website Settings</button>
+            </form>
+          </details>
+
+          <details class="admin-page" data-admin-page="about" open>
+            <summary>About, Skills, Experience, and Workshop Content</summary>
+            <form class="admin-form" id="sectionContentForm">
+              <input name="profileStatus" placeholder="Profile status / graduation message" />
+              <input name="aboutHeading" placeholder="About page heading" />
+              <input name="portfolioHeading" placeholder="Portfolio page heading" />
+              <input name="liveSnapshotHeading" placeholder="Live interaction heading" />
+              <textarea name="liveSnapshotIntro" placeholder="Live interaction explanation"></textarea>
+              <input name="aboutKicker" placeholder="About profile kicker" />
+              <textarea name="aboutSecondary" placeholder="Extended About description"></textarea>
+              <input name="skillsHeading" placeholder="Skills section heading" />
+              <textarea name="skillsIntro" placeholder="Skills section introduction"></textarea>
+              <input name="experienceHeading" placeholder="Experience section heading" />
+              <textarea name="experienceIntro" placeholder="Experience section introduction"></textarea>
+              <textarea name="housingDescription" placeholder="Summer Housing description"></textarea>
+              <textarea name="aramarkDescription" placeholder="Aramark description"></textarea>
+              <textarea name="gsaDescription" placeholder="BAIM GSA description"></textarea>
+              <textarea name="internshipDescription" placeholder="Business Development internship description"></textarea>
+              <input name="academicHeading" placeholder="Academic section heading" />
+              <input name="mastersDegree" placeholder="Master's degree title" />
+              <input name="mastersSchool" placeholder="Master's university and expected completion" />
+              <textarea name="mastersDescription" placeholder="Master's academic description"></textarea>
+              <textarea name="mastersCompletedCourses" placeholder="Completed master's courses, comma separated"></textarea>
+              <textarea name="mastersPlannedCourses" placeholder="Planned master's courses, comma separated"></textarea>
+              <input name="bachelorsDegree" placeholder="Bachelor's degree title" />
+              <input name="bachelorsSchool" placeholder="Bachelor's university and completion date" />
+              <textarea name="bachelorsDescription" placeholder="Bachelor's academic description"></textarea>
+              <textarea name="bachelorsFinanceCourses" placeholder="Bachelor's finance and analytical courses, comma separated"></textarea>
+              <textarea name="bachelorsBusinessCourses" placeholder="Bachelor's accounting, governance, and strategy courses, comma separated"></textarea>
+              <input name="workshopHeading" placeholder="Workshop heading" />
+              <textarea name="workshopIntro" placeholder="Workshop introduction"></textarea>
+              <textarea name="workshopRole" placeholder="Workshop role and coordination"></textarea>
+              <textarea name="workshopOutcome" placeholder="Workshop outcomes"></textarea>
+              <input name="skillTitle0" placeholder="Skill group 1 title" /><textarea name="skillDescription0" placeholder="Skill group 1 description"></textarea><textarea name="skills0" placeholder="Skill group 1 comma-separated skills"></textarea>
+              <input name="skillTitle1" placeholder="Skill group 2 title" /><textarea name="skillDescription1" placeholder="Skill group 2 description"></textarea><textarea name="skills1" placeholder="Skill group 2 comma-separated skills"></textarea>
+              <input name="skillTitle2" placeholder="Skill group 3 title" /><textarea name="skillDescription2" placeholder="Skill group 3 description"></textarea><textarea name="skills2" placeholder="Skill group 3 comma-separated skills"></textarea>
+              <input name="skillTitle3" placeholder="Skill group 4 title" /><textarea name="skillDescription3" placeholder="Skill group 4 description"></textarea><textarea name="skills3" placeholder="Skill group 4 comma-separated skills"></textarea>
+              <input name="skillTitle4" placeholder="Skill group 5 title" /><textarea name="skillDescription4" placeholder="Skill group 5 description"></textarea><textarea name="skills4" placeholder="Skill group 5 comma-separated skills"></textarea>
+              <input name="skillTitle5" placeholder="Skill group 6 title" /><textarea name="skillDescription5" placeholder="Skill group 6 description"></textarea><textarea name="skills5" placeholder="Skill group 6 comma-separated skills"></textarea>
+              <button class="button primary" type="submit">Save Section Content</button>
+            </form>
+          </details>
+
+          <details class="admin-page" data-admin-page="projects" open>
+            <summary>Portfolio Projects</summary>
+            <form class="admin-form" id="projectForm">
+              <input name="projectId" type="hidden" />
+              <input name="title" placeholder="Project title" required />
+              <input name="category" placeholder="Category" required />
+              <input name="date" placeholder="When created" required />
+              <input name="tech" placeholder="Technologies used" required />
+              <textarea name="summary" placeholder="Short summary" required></textarea>
+              <textarea name="reason" placeholder="Reason for the project" required></textarea>
+              <textarea name="process" placeholder="How it was created" required></textarea>
+              <textarea name="details" placeholder="Full details, challenges, results, role, and problem solved" required></textarea>
+              <textarea name="findings" placeholder="Key findings and analytical insights"></textarea>
+              <textarea name="recommendations" placeholder="Recommendations, next steps, or business implications"></textarea>
+              <input name="link" placeholder="Optional link" />
+              <label>Project image <input name="image" type="file" accept="image/*" /></label>
+              <label>Project file / PDF / BI file / screenshot <input name="projectFile" type="file" accept="image/*,.pdf,.twb,.twbx,.pbix,.csv,.xlsx,.xls,.html" /></label>
+              <input name="fileNote" placeholder="File description or explanation" />
+              <label class="checkbox-label"><input name="dashboard" type="checkbox" /> Mark as dashboard project</label>
+              <button class="button primary" type="submit">Save Project</button>
+              <button class="button secondary" id="clearProjectForm" type="button">Clear</button>
+            </form>
+            <div class="admin-list" id="adminProjectList"></div>
+          </details>
+
+          <details class="admin-page" data-admin-page="certifications" open>
+            <summary>Certifications</summary>
+            <form class="admin-form" id="certificationForm">
+              <input name="certificationId" type="hidden" />
+              <input name="title" placeholder="Certificate title" required />
+              <input name="issuer" placeholder="Issuer / provider" required />
+              <input name="date" placeholder="Date or semester" required />
+              <textarea name="summary" placeholder="What this certificate proves or supports" required></textarea>
+              <textarea name="skills" placeholder="Skills or focus areas, comma separated" required></textarea>
+              <label>Certificate file <input name="certificateFile" type="file" accept=".pdf,image/*,.doc,.docx" /></label>
+              <button class="button primary" type="submit">Save Certification</button>
+              <button class="button secondary" id="clearCertificationForm" type="button">Clear</button>
+            </form>
+            <div class="admin-list" id="adminCertificationList"></div>
+          </details>
+
+          <details class="admin-page" data-admin-page="sections" open>
+            <summary>Custom Portfolio Sections</summary>
+            <form class="admin-form" id="customSectionForm">
+              <input name="sectionId" type="hidden" />
+              <input name="eyebrow" placeholder="Small label, for example Case Study or Leadership" required />
+              <input name="title" placeholder="Section title" required />
+              <textarea name="body" placeholder="Section description or story" required></textarea>
+              <input name="tags" placeholder="Tags or skills, comma separated" />
+              <label>Optional file or image <input name="sectionFile" type="file" accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.xlsx,.csv,.zip,.pbix,.html" /></label>
+              <input name="fileNote" placeholder="File description" />
+              <label class="checkbox-label"><input name="visible" type="checkbox" checked /> Show on Portfolio page</label>
+              <button class="button primary" type="submit">Save Section</button>
+              <button class="button secondary" id="clearCustomSectionForm" type="button">Clear</button>
+            </form>
+            <div class="admin-list" id="adminCustomSectionList"></div>
+          </details>
+
+          <details class="admin-page" data-admin-page="blog" open>
+            <summary>Blog Posts</summary>
+            <form class="admin-form" id="blogForm">
+              <input name="blogId" type="hidden" />
+              <input name="title" placeholder="Blog title" required />
+              <input name="date" placeholder="Date" required />
+              <input name="tags" placeholder="Keywords/tags" required />
+              <textarea name="preview" placeholder="Short preview" required></textarea>
+              <textarea name="body" placeholder="Full blog post" required></textarea>
+              <button class="button primary" type="submit">Save Blog</button>
+              <button class="button secondary" id="clearBlogForm" type="button">Clear</button>
+            </form>
+            <div class="admin-list" id="adminBlogList"></div>
+          </details>
+
+          <details class="admin-page" data-admin-page="messages" open>
+            <summary>Contact Messages</summary>
+            <div class="admin-list" id="adminMessages"></div>
+          </details>
+
+          <details class="admin-page" data-admin-page="security" open>
+            <summary>Security and Deployment Notes</summary>
+            <div class="security-admin-card">
+              <h2>Static demo security</h2>
+              <p>This Admin editor is protected for local/demo use only. Client-side passwords can be viewed by technical users after deployment, so do not treat this as production authentication.</p>
+              <p>Before publishing a real editable Admin online, connect authentication through Firebase Auth, Supabase Auth, Auth0, or a server-side login. Keep private editor actions behind backend rules, not only JavaScript.</p>
+              <ul>
+                <li>Visitor pages stay clean and do not show edit controls.</li>
+                <li><code>admin.html</code> includes <code>noindex, nofollow</code> to discourage search indexing.</li>
+                <li>Files uploaded in this static demo are stored in browser localStorage unless they are already part of the repository assets.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><p>Copyright © 2026 Billal Javed. All rights reserved.</p></footer>
+    <script src="script.js"></script>
+  </body>
+</html>

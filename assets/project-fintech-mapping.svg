@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Fintech data mapping visual">
+  <rect width="900" height="540" fill="#071426"/>
+  <rect x="110" y="155" width="220" height="190" fill="#0b1f35" stroke="#55d6ff"/>
+  <rect x="570" y="155" width="220" height="190" fill="#0b1f35" stroke="#c8a642"/>
+  <path d="M330 205h240M330 250h240M330 295h240" stroke="#62f0bf" stroke-width="5"/>
+  <circle cx="450" cy="205" r="12" fill="#55d6ff"/><circle cx="450" cy="250" r="12" fill="#c8a642"/><circle cx="450" cy="295" r="12" fill="#62f0bf"/>
+  <text x="145" y="230" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">FDX</text>
+  <text x="610" y="230" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">DNA</text>
+  <text x="85" y="92" fill="#55d6ff" font-family="Arial" font-size="24" font-weight="700">FINTECH / DATA QUALITY</text>
+  <text x="85" y="455" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">AI-Powered Data Mapping</text>
+  <text x="85" y="492" fill="#a7c2dc" font-family="Arial" font-size="20">compliance · APIs · integration logic</text>
+</svg>

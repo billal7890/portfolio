@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="ArtHaven relational database model visual">
+  <rect width="900" height="540" fill="#071426"/>
+  <path d="M0 90h900M0 180h900M0 270h900M0 360h900M0 450h900M150 0v540M300 0v540M450 0v540M600 0v540M750 0v540" stroke="#16324e" stroke-width="1"/>
+  <g fill="#0b1f35" stroke-width="3">
+    <rect x="90" y="140" width="160" height="82" stroke="#55d6ff"/>
+    <rect x="370" y="90" width="170" height="82" stroke="#c8a642"/>
+    <rect x="650" y="140" width="160" height="82" stroke="#62f0bf"/>
+    <rect x="185" y="315" width="170" height="82" stroke="#62f0bf"/>
+    <rect x="545" y="315" width="170" height="82" stroke="#55d6ff"/>
+  </g>
+  <path d="M250 181h120M540 131h110M455 172 270 315M455 172 630 315M355 356h190" stroke="#c8a642" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <circle cx="250" cy="181" r="9" fill="#55d6ff"/><circle cx="370" cy="181" r="9" fill="#c8a642"/><circle cx="540" cy="131" r="9" fill="#c8a642"/><circle cx="650" cy="181" r="9" fill="#62f0bf"/><circle cx="270" cy="315" r="9" fill="#62f0bf"/><circle cx="630" cy="315" r="9" fill="#55d6ff"/>
+  <text x="119" y="176" fill="#edf6ff" font-family="Arial" font-size="24" font-weight="700">Gallery</text>
+  <text x="392" y="126" fill="#edf6ff" font-family="Arial" font-size="24" font-weight="700">Exhibition</text>
+  <text x="682" y="176" fill="#edf6ff" font-family="Arial" font-size="24" font-weight="700">Artwork</text>
+  <text x="220" y="351" fill="#edf6ff" font-family="Arial" font-size="24" font-weight="700">Customer</text>
+  <text x="588" y="351" fill="#edf6ff" font-family="Arial" font-size="24" font-weight="700">Sales</text>
+  <text x="78" y="86" fill="#55d6ff" font-family="Arial" font-size="24" font-weight="700">DATABASE SYSTEMS / RELATIONAL DESIGN</text>
+  <text x="78" y="458" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">ArtHaven Gallery Database</text>
+  <text x="78" y="494" fill="#a7c2dc" font-family="Arial" font-size="20">entities · cardinalities · business rules · data integrity</text>
+</svg>

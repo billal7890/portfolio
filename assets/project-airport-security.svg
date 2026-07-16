@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Airport security simulation visual">
+  <rect width="900" height="540" fill="#071426"/>
+  <path d="M70 390h760M70 310h760M70 230h760" stroke="#16324e" stroke-width="2"/>
+  <path d="M135 390c0-120 95-180 215-180h200c120 0 215 60 215 180" fill="none" stroke="#55d6ff" stroke-width="5"/>
+  <rect x="160" y="330" width="120" height="62" fill="#10263f" stroke="#55d6ff"/>
+  <rect x="390" y="275" width="120" height="117" fill="#10263f" stroke="#c8a642"/>
+  <rect x="620" y="310" width="120" height="82" fill="#10263f" stroke="#62f0bf"/>
+  <circle cx="220" cy="250" r="18" fill="#55d6ff"/>
+  <circle cx="450" cy="205" r="18" fill="#c8a642"/>
+  <circle cx="680" cy="245" r="18" fill="#62f0bf"/>
+  <path d="M220 250 450 205 680 245" stroke="#55d6ff" stroke-width="4" fill="none"/>
+  <text x="80" y="92" fill="#55d6ff" font-family="Arial" font-size="24" font-weight="700">SIMULATION / OPERATIONS</text>
+  <text x="80" y="455" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">Airport Security Flow</text>
+  <text x="80" y="492" fill="#a7c2dc" font-family="Arial" font-size="20">lanes · scanner capacity · queue risk · scenarios</text>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="COVID SAS analytics visual">
+  <rect width="900" height="540" fill="#071426"/>
+  <path d="M110 390h660M110 320h660M110 250h660M110 180h660" stroke="#16324e"/>
+  <rect x="150" y="250" width="55" height="140" fill="#55d6ff"/><rect x="250" y="210" width="55" height="180" fill="#62f0bf"/><rect x="350" y="285" width="55" height="105" fill="#55d6ff"/><rect x="450" y="160" width="55" height="230" fill="#c8a642"/><rect x="550" y="230" width="55" height="160" fill="#55d6ff"/><rect x="650" y="190" width="55" height="200" fill="#62f0bf"/>
+  <path d="M140 300 276 250 386 275 478 210 582 245 705 175" stroke="#edf6ff" stroke-width="4" fill="none"/>
+  <text x="88" y="92" fill="#55d6ff" font-family="Arial" font-size="24" font-weight="700">SAS / PUBLIC HEALTH ECONOMICS</text>
+  <text x="88" y="455" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">COVID Economic Impact</text>
+  <text x="88" y="492" fill="#a7c2dc" font-family="Arial" font-size="20">GDP · HDI · case metrics · mortality analysis</text>
+</svg>

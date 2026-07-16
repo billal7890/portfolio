@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Student habits Power BI dashboard visual">
+  <rect width="900" height="540" fill="#071426"/>
+  <rect x="80" y="100" width="210" height="120" fill="#0b1f35" stroke="#55d6ff"/>
+  <rect x="330" y="100" width="210" height="120" fill="#0b1f35" stroke="#c8a642"/>
+  <rect x="580" y="100" width="210" height="120" fill="#0b1f35" stroke="#62f0bf"/>
+  <path d="M110 380h680" stroke="#16324e" stroke-width="3"/>
+  <rect x="135" y="285" width="60" height="95" fill="#55d6ff"/>
+  <rect x="240" y="250" width="60" height="130" fill="#62f0bf"/>
+  <rect x="345" y="305" width="60" height="75" fill="#55d6ff"/>
+  <rect x="450" y="220" width="60" height="160" fill="#c8a642"/>
+  <rect x="555" y="265" width="60" height="115" fill="#55d6ff"/>
+  <rect x="660" y="200" width="60" height="180" fill="#62f0bf"/>
+  <path d="M120 330 260 278 380 318 490 246 610 284 735 218" fill="none" stroke="#edf6ff" stroke-width="4"/>
+  <text x="100" y="150" fill="#edf6ff" font-family="Arial" font-size="34" font-weight="700">1,000</text>
+  <text x="350" y="150" fill="#edf6ff" font-family="Arial" font-size="34" font-weight="700">16</text>
+  <text x="600" y="150" fill="#edf6ff" font-family="Arial" font-size="34" font-weight="700">DAX</text>
+  <text x="80" y="455" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">Student Habits Dashboard</text>
+  <text x="80" y="492" fill="#a7c2dc" font-family="Arial" font-size="20">Power BI · wellness · attendance · exam performance</text>
+</svg>

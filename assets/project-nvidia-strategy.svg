@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Nvidia PESTLE strategy visual">
+  <rect width="900" height="540" fill="#071426"/>
+  <polygon points="450,105 705,250 705,398 450,455 195,398 195,250" fill="#0b1f35" stroke="#55d6ff" stroke-width="4"/>
+  <path d="M450 105v350M195 250l510 148M705 250 195 398" stroke="#16324e" stroke-width="4"/>
+  <circle cx="450" cy="280" r="74" fill="#10263f" stroke="#c8a642" stroke-width="4"/>
+  <text x="405" y="292" fill="#edf6ff" font-family="Arial" font-size="30" font-weight="700">PESTLE</text>
+  <text x="84" y="92" fill="#55d6ff" font-family="Arial" font-size="24" font-weight="700">STRATEGY / AI MARKET RISK</text>
+  <text x="84" y="455" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">Nvidia Strategic Analysis</text>
+  <text x="84" y="492" fill="#a7c2dc" font-family="Arial" font-size="20">trade policy · AI growth · antitrust pressure</text>
+</svg>

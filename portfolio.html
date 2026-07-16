@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio | Billal Javed</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="portfolio">
+    <header class="site-header">
+      <div class="brand-wrap"><a class="brand" href="index.html">Billal Javed</a><a class="admin-gate" href="admin.html" aria-label="Admin login" title="Admin login"></a></div>
+      <button class="menu-toggle" id="menuToggle">Menu</button>
+      <nav class="top-nav" id="topNav">
+        <a href="index.html" data-page-link="home">Home</a>
+        <a href="about.html" data-page-link="about">About</a>
+        <a href="portfolio.html" data-page-link="portfolio">Portfolio</a>
+        <a href="blog.html" data-page-link="blog">Blog</a>
+        <a href="contact.html" data-page-link="contact">Contact</a>
+      </nav>
+      <div class="social-actions">
+        <a class="social-icon github-icon" href="https://github.com/billal7890" data-social="github" target="_blank" rel="noreferrer" aria-label="GitHub"></a>
+        <a class="social-icon linkedin-icon" href="https://www.linkedin.com/in/billaljaved" data-social="linkedin" target="_blank" rel="noreferrer" aria-label="LinkedIn"></a>
+        <a class="social-icon handshake-icon" href="https://udel.joinhandshake.com/profiles/billaljaved" data-social="handshake" target="_blank" rel="noreferrer" aria-label="Handshake"></a>
+      </div>
+    </header>
+    <main>
+      <section class="page-hero section-block reveal">
+        <p class="eyebrow">Portfolio</p>
+        <h1 id="portfolioHeading">Projects, analytical work, and leadership in practice.</h1>
+      </section>
+
+      <section class="leadership-project section-block reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Leadership &amp; Program Development</p>
+          <h2 id="workshopHeading">From Data to Decision: Analytics &amp; Storytelling Workshop</h2>
+          <p id="workshopIntro">A four-hour professional development workshop organized through the BAIM Graduate Student Association in collaboration with the University of Delaware Library's Research Data &amp; Design Commons.</p>
+        </div>
+        <div class="leadership-project-grid">
+          <div class="leadership-summary">
+            <div class="card-meta"><span class="tag">April 24, 2026</span><span class="tag">Morris Library</span><span class="tag">BAIM GSA</span></div>
+            <h3>My role as organizer and event coordinator</h3>
+            <p id="workshopRole">I developed the workshop concept and learning objectives, coordinated with the department and library team, secured the Data Analysis &amp; Visualization Lab, managed registration and communications, selected hands-on datasets, supported event logistics, and facilitated the student experience.</p>
+            <p id="workshopOutcome">The workshop guided participants through data ethics, storytelling with data, data management, and practical analysis. Students applied the workflow to real-world datasets, shared their findings, and gained an opportunity to earn a LinkedIn-shareable badge recognizing their participation and professional development.</p>
+          </div>
+          <div class="workshop-flow">
+            <article><strong>01</strong><div><h3>Data Ethics</h3><p>Privacy, bias, fairness, transparency, and responsible AI-supported decisions.</p></div></article>
+            <article><strong>02</strong><div><h3>Analytics Storytelling</h3><p>Chart selection, accessible dashboards, and communicating findings to decision-makers.</p></div></article>
+            <article><strong>03</strong><div><h3>Data Management</h3><p>Organization, metadata, quality, reproducibility, and collaborative workflows.</p></div></article>
+            <article><strong>04</strong><div><h3>Applied Analysis</h3><p>Hands-on exploration using sales, gaming, and airline profitability datasets.</p></div></article>
+          </div>
+        </div>
+        <div class="workshop-skill-summary">
+          <div><p class="eyebrow">Skills Demonstrated</p><h3>Leadership shown through delivery, not only participation.</h3></div>
+          <div class="skills-list workshop-skills">
+            <span>Project Management</span><span>Cross-Department Coordination</span><span>Stakeholder Communication</span><span>Program Design</span><span>Facilitation</span><span>Data Literacy Advocacy</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="certifications-section section-block reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Certifications</p>
+          <h2>Additional professional learning that supports analytics, finance, and management work.</h2>
+          <p>These certificates strengthen the business foundation behind my portfolio: financial reporting knowledge, management context, and the ability to connect analytical findings to practical organizational decisions.</p>
+        </div>
+        <div class="certification-grid" id="certificationGrid"></div>
+      </section>
+
+      <section class="custom-sections-section section-block reveal" id="customPortfolioSections" hidden>
+        <div class="section-heading">
+          <p class="eyebrow">Additional Portfolio Evidence</p>
+          <h2>Flexible sections added through Admin.</h2>
+          <p>These entries let me add new work, leadership examples, files, notes, or achievements without changing the portfolio layout by hand.</p>
+        </div>
+        <div class="custom-section-grid" id="customSectionGrid"></div>
+      </section>
+
+      <section class="portfolio section-block">
+        <div class="section-heading"><p class="eyebrow">Analytics Portfolio</p><h2>Technical and strategic projects.</h2></div>
+        <div class="portfolio-grid" id="portfolioGrid"></div>
+      </section>
+    </main>
+    <dialog class="content-modal" id="contentModal">
+      <button class="modal-close" id="modalClose" type="button">Close</button>
+      <div id="modalContent"></div>
+    </dialog>
+    <footer class="site-footer"><p>Copyright &copy; 2026 Billal Javed. All rights reserved.</p></footer>
+    <script src="script.js"></script>
+  </body>
+</html>

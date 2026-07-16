@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Netflix dashboard visual">
+  <rect width="900" height="540" fill="#071426"/>
+  <rect x="92" y="112" width="310" height="150" fill="#0b1f35" stroke="#55d6ff"/>
+  <rect x="435" y="112" width="350" height="150" fill="#0b1f35" stroke="#c8a642"/>
+  <rect x="92" y="292" width="693" height="115" fill="#0b1f35" stroke="#62f0bf"/>
+  <circle cx="245" cy="188" r="54" fill="#55d6ff" opacity=".85"/>
+  <path d="M245 188V134a54 54 0 0 1 48 78z" fill="#c8a642"/>
+  <rect x="475" y="210" width="35" height="32" fill="#55d6ff"/><rect x="535" y="180" width="35" height="62" fill="#62f0bf"/><rect x="595" y="145" width="35" height="97" fill="#c8a642"/><rect x="655" y="165" width="35" height="77" fill="#55d6ff"/>
+  <path d="M125 365 245 330 360 355 480 315 610 340 745 305" stroke="#edf6ff" stroke-width="4" fill="none"/>
+  <text x="88" y="455" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">Netflix Content Dashboard</text>
+  <text x="88" y="492" fill="#a7c2dc" font-family="Arial" font-size="20">genre · ratings · country · release trends</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Portfolio analytics visual">
+  <rect width="900" height="540" fill="#071426"/>
+  <path d="M0 88h900M0 176h900M0 264h900M0 352h900M0 440h900M120 0v540M240 0v540M360 0v540M480 0v540M600 0v540M720 0v540" stroke="#16324e" stroke-width="1"/>
+  <circle cx="180" cy="330" r="72" fill="#0f2c45" stroke="#55d6ff" stroke-width="3"/>
+  <circle cx="405" cy="230" r="92" fill="#10263f" stroke="#c8a642" stroke-width="3"/>
+  <circle cx="654" cy="290" r="62" fill="#0e3447" stroke="#62f0bf" stroke-width="3"/>
+  <path d="M180 330 405 230 654 290" fill="none" stroke="#55d6ff" stroke-width="5" stroke-linecap="round"/>
+  <path d="M125 404h630" stroke="#c8a642" stroke-width="4"/>
+  <rect x="122" y="115" width="360" height="58" fill="#0b1f35" stroke="#224869"/>
+  <text x="145" y="151" fill="#55d6ff" font-family="Arial" font-size="24" font-weight="700">PORTFOLIO INTELLIGENCE</text>
+  <text x="145" y="456" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">Business Analytics Portfolio</text>
+  <text x="145" y="492" fill="#a7c2dc" font-family="Arial" font-size="20">projects · evidence · engagement · decisions</text>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Airline review NLP analysis visual">
+  <rect width="900" height="540" fill="#071426"/>
+  <circle cx="240" cy="230" r="90" fill="#10263f" stroke="#55d6ff" stroke-width="4"/>
+  <circle cx="450" cy="220" r="118" fill="#0d253b" stroke="#c8a642" stroke-width="4"/>
+  <circle cx="640" cy="280" r="82" fill="#0f3042" stroke="#62f0bf" stroke-width="4"/>
+  <path d="M210 385h485" stroke="#16324e" stroke-width="10"/>
+  <path d="M210 385h155" stroke="#55d6ff" stroke-width="10"/>
+  <path d="M370 385h190" stroke="#c8a642" stroke-width="10"/>
+  <path d="M565 385h130" stroke="#62f0bf" stroke-width="10"/>
+  <text x="190" y="222" fill="#edf6ff" font-family="Arial" font-size="28" font-weight="700">VADER</text>
+  <text x="405" y="212" fill="#edf6ff" font-family="Arial" font-size="28" font-weight="700">LDA</text>
+  <text x="592" y="274" fill="#edf6ff" font-family="Arial" font-size="28" font-weight="700">TOPICS</text>
+  <text x="84" y="92" fill="#55d6ff" font-family="Arial" font-size="24" font-weight="700">NLP / CUSTOMER EXPERIENCE</text>
+  <text x="84" y="455" fill="#edf6ff" font-family="Arial" font-size="38" font-weight="700">Airline Review Topic Analysis</text>
+  <text x="84" y="492" fill="#a7c2dc" font-family="Arial" font-size="20">sentiment · complaint themes · airline comparison</text>
+</svg>
