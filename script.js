@@ -1414,6 +1414,15 @@ function renderProjectVisualStory(project) {
       <div class="report-chart">
         <div class="report-chart-head"><strong>${escapeHtml(visual.chartTitle)}</strong><span>${escapeHtml(visual.status)}</span></div>
         <div class="report-chart-axis" aria-hidden="true"><span>High</span><span>Medium</span><span>Low</span></div>
+        <div class="report-concept-layer" aria-hidden="true">
+          <span class="report-gold-axis"></span>
+          ${visual.values.map((value, index) => `<b style="--node-x:${8 + index * (84 / Math.max(1, visual.values.length - 1))}%;--node-y:${92 - value}%"></b>`).join("")}
+        </div>
+        <div class="report-visual-definition">
+          <article><span>Designed to record</span><p>${escapeHtml(visual.records)}</p></article>
+          <article><span>Defines</span><p>${escapeHtml(visual.defines)}</p></article>
+          <article><span>How to read it</span><p>${escapeHtml(visual.reads)}</p></article>
+        </div>
         <div class="report-bars">${visual.values.map((value, index) => `<i style="--report-height:${value}%"><em>${escapeHtml(String(value))}</em><span>${escapeHtml(visual.labels[index])}</span></i>`).join("")}</div>
         <svg viewBox="0 0 320 110" preserveAspectRatio="none" aria-label="Project analysis trend"><polyline points="${points}"></polyline></svg>
         <div class="report-callouts">
@@ -1436,6 +1445,9 @@ function getProjectVisualProfile(project) {
     labels: ["Question", "Data", "Model", "Visual", "Review", "Result"],
     values: [62, 72, 78, 70, 66, 82],
     callouts: ["Problem framing", "Evidence review", "Decision support"],
+    records: "The main analytical stages, evidence strength, and decision path behind this project.",
+    defines: "How the project turns context into analysis, interpretation, and a usable recommendation.",
+    reads: "Higher bars show stronger project emphasis; connected nodes show how each stage supports the next decision.",
     insight: "The visual shows how the project moved from business context to analytical output and a practical next step.",
     metrics: [
       { label: "Scope", value: project.category },
@@ -1452,6 +1464,9 @@ function getProjectVisualProfile(project) {
       labels: ["Audience", "Content", "Reports", "Admin", "Dashboard", "Publish"],
       values: [74, 88, 82, 79, 85, 68],
       callouts: ["Project reports", "Admin editing", "Portfolio dashboard"],
+      records: "Visitor journey, project depth, admin management, dashboard evidence, and publishing readiness.",
+      defines: "The portfolio as a professional analytics product rather than a static resume page.",
+      reads: "The strongest signals show where the site supports evidence-based storytelling and ongoing content updates.",
       insight: "The strongest signal is the shift from a static resume site into an updateable analytics portfolio with evidence, dashboards, and structured project pages.",
       metrics: [
         { label: "Experience", value: "Multi-page portfolio" },
@@ -1467,6 +1482,9 @@ function getProjectVisualProfile(project) {
       labels: ["Arrivals", "ID Check", "Scanner", "Queue", "Lanes", "Shortfall"],
       values: [72, 58, 94, 84, 76, 43],
       callouts: ["10,000 scenarios", "Regular lane reduced shortfall", "Capacity planning"],
+      records: "Passenger arrivals, checkpoint constraints, scanner pressure, queue buildup, lane decisions, and shortfall risk.",
+      defines: "Where operational capacity is most constrained and which decision lever changes service reliability.",
+      reads: "The scanner bar is intentionally highest because the project identified scanner capacity as the main bottleneck.",
       insight: "Scanner capacity carries the highest pressure, while the scenario comparison shows how small capacity changes can reduce service shortfall risk.",
       metrics: [
         { label: "Simulation type", value: "Monte Carlo + DES" },
@@ -1482,6 +1500,9 @@ function getProjectVisualProfile(project) {
       labels: ["Study", "Attend", "Sleep", "Screen", "Wellness", "Score"],
       values: [86, 82, 68, 45, 64, 78],
       callouts: ["1,000 records", "Power Query model", "DAX measures"],
+      records: "Study habits, attendance, wellness context, screen-time behavior, and performance outcomes.",
+      defines: "Which behavioral signals are most useful when academic performance is interpreted through a dashboard.",
+      reads: "Higher study and attendance signals show stronger performance drivers, while wellness and screen time add context.",
       insight: "Study time and attendance are strong signals, but wellness and screen-time context make the dashboard more useful for interpreting student outcomes.",
       metrics: [
         { label: "Dataset", value: "1,000 student records" },
@@ -1497,6 +1518,9 @@ function getProjectVisualProfile(project) {
       labels: ["Calls", "Clean", "Terms", "Index", "Trend", "Risk"],
       values: [76, 70, 88, 92, 81, 74],
       callouts: ["Earnings calls", "NLP dictionary", "Finance signal"],
+      records: "Earnings-call text, cleaned language, uncertainty terms, index construction, trend movement, and risk interpretation.",
+      defines: "How unstructured corporate language becomes a measurable financial uncertainty signal.",
+      reads: "The index stage is highest because the project converts language into a comparable risk indicator.",
       insight: "The highest signal appears in the uncertainty index stage, where language patterns become a measurable risk indicator.",
       metrics: [
         { label: "Scope", value: "Text analytics" },
@@ -1512,6 +1536,9 @@ function getProjectVisualProfile(project) {
       labels: ["Reviews", "Clean", "Mood", "Topics", "Drivers", "Action"],
       values: [82, 74, 68, 86, 78, 72],
       callouts: ["VADER sentiment", "LDA topics", "Experience drivers"],
+      records: "Review volume, text cleaning, sentiment direction, topic clusters, service drivers, and action areas.",
+      defines: "What customers are reacting to and which themes explain sentiment patterns.",
+      reads: "Topic strength is highest because themes explain the reason behind customer sentiment.",
       insight: "Topic modeling is the strongest interpretive layer because it explains why sentiment changes instead of only labeling reviews positive or negative.",
       metrics: [
         { label: "Analysis", value: "Sentiment + topics" },
@@ -1527,6 +1554,9 @@ function getProjectVisualProfile(project) {
       labels: ["Profile", "Cuisine", "Price", "Location", "Rating", "Network"],
       values: [78, 84, 64, 72, 88, 58],
       callouts: ["Cosine similarity", "Feature scaling", "Social signal"],
+      records: "Preference profile, cuisine similarity, price fit, location practicality, rating strength, and network signal.",
+      defines: "How multiple recommendation signals combine into a ranked restaurant match.",
+      reads: "Ratings and cuisine similarity dominate because they explain both quality and preference fit.",
       insight: "Ratings and cuisine similarity produce the strongest matching signal, while location and network data make the recommendation more practical.",
       metrics: [
         { label: "Model", value: "Hybrid recommender" },
@@ -1542,6 +1572,9 @@ function getProjectVisualProfile(project) {
       labels: ["Data", "Layer", "Symbol", "Pop-up", "App", "Insight"],
       values: [70, 86, 78, 82, 76, 68],
       callouts: ["Hosted layers", "Pop-up design", "Delaware spatial data"],
+      records: "Source data, hosted layers, symbology, pop-up logic, app publishing, and map interpretation.",
+      defines: "How spatial data becomes a viewer-ready ArcGIS web map for groundwater monitoring.",
+      reads: "Layer and pop-up signals are strongest because they determine whether the map is usable and understandable.",
       insight: "The strongest value comes from layer configuration and pop-up design, where raw spatial data becomes easier for a viewer to interpret.",
       metrics: [
         { label: "Platform", value: "ArcGIS Online" },
@@ -1557,6 +1590,9 @@ function getProjectVisualProfile(project) {
       labels: ["GDP", "HDI", "Beds", "Sanitation", "Cases", "Outcome"],
       values: [76, 82, 68, 72, 64, 79],
       callouts: ["PROC SQL", "Preparedness variables", "Country comparison"],
+      records: "Economic strength, development indicators, hospital capacity, sanitation access, case burden, and outcome context.",
+      defines: "How preparedness indicators explain differences in pandemic response capacity.",
+      reads: "HDI and outcome signals are high because the project connects development context to COVID-19 preparedness.",
       insight: "The combined preparedness view is stronger than any single indicator because economic and infrastructure context change how outcomes should be interpreted.",
       metrics: [
         { label: "Tool", value: "SAS" },
@@ -1572,6 +1608,9 @@ function getProjectVisualProfile(project) {
       labels: ["Genre", "Country", "Year", "Rating", "Volume", "Strategy"],
       values: [86, 72, 78, 68, 90, 76],
       callouts: ["Content mix", "Release trends", "Dashboard filters"],
+      records: "Genre mix, country distribution, release year patterns, rating categories, catalog volume, and strategy signal.",
+      defines: "How content metadata becomes a dashboard for understanding streaming catalog direction.",
+      reads: "Volume and genre signals are strongest because they explain the visible shape of the catalog.",
       insight: "Content volume and genre distribution carry the strongest visual signal, helping the dashboard explain catalog strategy patterns quickly.",
       metrics: [
         { label: "Tool", value: "Tableau" },
@@ -1587,6 +1626,9 @@ function getProjectVisualProfile(project) {
       labels: ["Entities", "Keys", "Relations", "Sales", "Artist", "Reports"],
       values: [92, 84, 88, 78, 72, 80],
       callouts: ["LDM reviewed", "Sales accountability", "Artist specialization"],
+      records: "Database entities, primary keys, relationships, sales links, artist specialization, and reporting readiness.",
+      defines: "How ArtHaven gallery operations are organized into a reliable relational structure.",
+      reads: "Entities and relationships are highest because the project depends on clean links between galleries, artworks, sales, employees, and customers.",
       insight: "The relationship layer is the strongest signal because exhibitions, artwork, sales, employees, and customers need clean links for reliable reporting.",
       metrics: [
         { label: "Scope", value: "Database systems" },
@@ -1602,6 +1644,9 @@ function getProjectVisualProfile(project) {
       labels: ["Source", "Map", "Rules", "Validate", "API", "Monitor"],
       values: [74, 92, 84, 88, 70, 64],
       callouts: ["Field mapping", "Validation rules", "Integration readiness"],
+      records: "Source fields, mapping logic, business rules, validation checks, API readiness, and monitoring needs.",
+      defines: "How raw fintech data fields are standardized before integration.",
+      reads: "Mapping and validation are highest because reliable integrations depend on clean field logic.",
       insight: "Mapping and validation are the highest-value stages because fintech data must be reliable before it can support downstream automation.",
       metrics: [
         { label: "Scope", value: "Fintech data" },
@@ -1617,6 +1662,9 @@ function getProjectVisualProfile(project) {
       labels: ["Political", "Economic", "Social", "Tech", "Legal", "Env"],
       values: [66, 78, 58, 94, 72, 60],
       callouts: ["AI demand", "Regulatory pressure", "Supply-chain exposure"],
+      records: "Political, economic, social, technological, legal, and environmental forces affecting Nvidia.",
+      defines: "Which macro factors create the strongest strategy pressure around AI growth.",
+      reads: "Technology is highest because AI demand drives the opportunity, while legal and economic signals frame risk.",
       insight: "Technology is the dominant opportunity signal, while legal and economic factors frame the strategic risk around AI growth.",
       metrics: [
         { label: "Framework", value: "PESTLE" },
@@ -1632,6 +1680,9 @@ function getProjectVisualProfile(project) {
       labels: ["Risk", "Trust", "Equity", "Intent", "Loyalty", "Result"],
       values: [82, 68, 78, 72, 66, 74],
       callouts: ["Research design", "Mediation concept", "Brand decision path"],
+      records: "Risk perception, trust response, brand equity movement, decision intent, loyalty direction, and research outcome.",
+      defines: "How risk can move through trust and brand equity before influencing customer decisions.",
+      reads: "Risk and brand equity are emphasized because they form the core relationship in the research model.",
       insight: "The visual emphasizes the mediator logic: risk perception matters because it can shape trust and brand equity before purchase or loyalty decisions.",
       metrics: [
         { label: "Scope", value: "Marketing analytics" },
