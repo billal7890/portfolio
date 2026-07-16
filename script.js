@@ -1398,27 +1398,249 @@ function renderProjectReport() {
 }
 
 function renderProjectVisualStory(project) {
-  const seed = project.title.split("").reduce((sum, letter) => sum + letter.charCodeAt(0), 0);
-  const values = Array.from({ length: 7 }, (_, index) => 34 + ((seed * (index + 3)) % 58));
-  const points = values.map((value, index) => `${index * 52 + 4},${100 - value}`).join(" ");
-  const stages = ["Question", "Data", "Model", "Visual", "Review", "Result", "Next"];
+  const visual = getProjectVisualProfile(project);
+  const maxValue = Math.max(...visual.values);
+  const points = visual.values.map((value, index) => {
+    const x = 8 + index * (304 / Math.max(1, visual.values.length - 1));
+    const y = 102 - (value / maxValue) * 78;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
   return `
     <section class="report-visual-story">
-      <div class="section-heading"><p class="eyebrow">Analytical View</p><h2>A visual reading of the project workflow.</h2><p>This visual summarizes relative analytical activity across the project stages. It is a portfolio visualization, while exact results and source files remain identified in the report.</p></div>
+      <div class="section-heading"><p class="eyebrow">Analytical View</p><h2>${escapeHtml(visual.heading)}</h2><p>${escapeHtml(visual.intro)}</p></div>
       <div class="report-kpis">
-        <article><span>Scope</span><strong>${escapeHtml(project.category)}</strong></article>
-        <article><span>Methods</span><strong>${escapeHtml(project.tech.split(",").slice(0, 2).join(" + "))}</strong></article>
-        <article><span>Artifacts</span><strong>${project.files?.length || 0}</strong></article>
+        ${visual.metrics.map((metric) => `<article><span>${escapeHtml(metric.label)}</span><strong>${escapeHtml(metric.value)}</strong></article>`).join("")}
       </div>
       <div class="report-chart">
-        <div class="report-chart-head"><strong>Project workflow signal</strong><span>Decision-support view</span></div>
+        <div class="report-chart-head"><strong>${escapeHtml(visual.chartTitle)}</strong><span>${escapeHtml(visual.status)}</span></div>
         <div class="report-chart-axis" aria-hidden="true"><span>High</span><span>Medium</span><span>Low</span></div>
-        <div class="report-bars">${values.map((value, index) => `<i style="--report-height:${value}%"><span>${stages[index]}</span></i>`).join("")}</div>
+        <div class="report-bars">${visual.values.map((value, index) => `<i style="--report-height:${value}%"><em>${escapeHtml(String(value))}</em><span>${escapeHtml(visual.labels[index])}</span></i>`).join("")}</div>
         <svg viewBox="0 0 320 110" preserveAspectRatio="none" aria-label="Project analysis trend"><polyline points="${points}"></polyline></svg>
-        <p class="report-chart-insight">Bars represent emphasis by project stage; the trend line shows how the work moves from raw context toward an actionable recommendation.</p>
+        <div class="report-callouts">
+          ${visual.callouts.map((callout) => `<span>${escapeHtml(callout)}</span>`).join("")}
+        </div>
+        <p class="report-chart-insight">${escapeHtml(visual.insight)}</p>
       </div>
     </section>
   `;
+}
+
+function getProjectVisualProfile(project) {
+  const artifactCount = String(project.files?.length || 0);
+  const methods = project.tech.split(",").slice(0, 2).join(" + ");
+  const base = {
+    heading: "A visual reading of the project workflow.",
+    intro: "This project visual connects the business question, analytical method, and decision output so the report is easier to scan.",
+    chartTitle: "Decision workflow signal",
+    status: "Project-specific view",
+    labels: ["Question", "Data", "Model", "Visual", "Review", "Result"],
+    values: [62, 72, 78, 70, 66, 82],
+    callouts: ["Problem framing", "Evidence review", "Decision support"],
+    insight: "The visual shows how the project moved from business context to analytical output and a practical next step.",
+    metrics: [
+      { label: "Scope", value: project.category },
+      { label: "Methods", value: methods },
+      { label: "Artifacts", value: artifactCount }
+    ]
+  };
+  const profiles = {
+    "billal-portfolio-website": {
+      heading: "Portfolio product analytics and content system.",
+      intro: "This visual treats the portfolio as a digital product: visitor journey, content depth, admin updates, and publish readiness.",
+      chartTitle: "Portfolio build maturity",
+      status: "Content system active",
+      labels: ["Audience", "Content", "Reports", "Admin", "Dashboard", "Publish"],
+      values: [74, 88, 82, 79, 85, 68],
+      callouts: ["Project reports", "Admin editing", "Portfolio dashboard"],
+      insight: "The strongest signal is the shift from a static resume site into an updateable analytics portfolio with evidence, dashboards, and structured project pages.",
+      metrics: [
+        { label: "Experience", value: "Multi-page portfolio" },
+        { label: "Core stack", value: "HTML + CSS + JS" },
+        { label: "Evidence", value: "Dashboard + files" }
+      ]
+    },
+    "airport-security-simulation": {
+      heading: "Passenger flow and checkpoint capacity simulation.",
+      intro: "The visual focuses on arrival pressure, scanner capacity, wait-time risk, and the operational effect of adding lane capacity.",
+      chartTitle: "Checkpoint pressure by decision lever",
+      status: "Scanner bottleneck identified",
+      labels: ["Arrivals", "ID Check", "Scanner", "Queue", "Lanes", "Shortfall"],
+      values: [72, 58, 94, 84, 76, 43],
+      callouts: ["10,000 scenarios", "Regular lane reduced shortfall", "Capacity planning"],
+      insight: "Scanner capacity carries the highest pressure, while the scenario comparison shows how small capacity changes can reduce service shortfall risk.",
+      metrics: [
+        { label: "Simulation type", value: "Monte Carlo + DES" },
+        { label: "Key constraint", value: "Scanner capacity" },
+        { label: "Decision output", value: "Lane strategy" }
+      ]
+    },
+    "student-habits-performance-powerbi": {
+      heading: "Student behavior, wellness, and performance dashboard.",
+      intro: "This view connects habits and academic outcomes so performance is understood through multiple behavioral signals, not one score.",
+      chartTitle: "Behavioral drivers of performance",
+      status: "Multi-factor view",
+      labels: ["Study", "Attend", "Sleep", "Screen", "Wellness", "Score"],
+      values: [86, 82, 68, 45, 64, 78],
+      callouts: ["1,000 records", "Power Query model", "DAX measures"],
+      insight: "Study time and attendance are strong signals, but wellness and screen-time context make the dashboard more useful for interpreting student outcomes.",
+      metrics: [
+        { label: "Dataset", value: "1,000 student records" },
+        { label: "Tool", value: "Power BI" },
+        { label: "Focus", value: "Performance drivers" }
+      ]
+    },
+    "corporate-uncertainty-index": {
+      heading: "Corporate uncertainty signal from earnings-call language.",
+      intro: "This visual follows unstructured text through NLP processing into an uncertainty index that can support financial interpretation.",
+      chartTitle: "Text-to-risk signal pipeline",
+      status: "Risk language indexed",
+      labels: ["Calls", "Clean", "Terms", "Index", "Trend", "Risk"],
+      values: [76, 70, 88, 92, 81, 74],
+      callouts: ["Earnings calls", "NLP dictionary", "Finance signal"],
+      insight: "The highest signal appears in the uncertainty index stage, where language patterns become a measurable risk indicator.",
+      metrics: [
+        { label: "Scope", value: "Text analytics" },
+        { label: "Methods", value: "Python + NLP" },
+        { label: "Output", value: "Risk index" }
+      ]
+    },
+    "airline-review-sentiment-topic-analysis": {
+      heading: "Airline review sentiment and customer experience themes.",
+      intro: "This visual translates review text into sentiment direction, recurring topics, and service improvement opportunities.",
+      chartTitle: "Customer voice analytics",
+      status: "Topics surfaced",
+      labels: ["Reviews", "Clean", "Mood", "Topics", "Drivers", "Action"],
+      values: [82, 74, 68, 86, 78, 72],
+      callouts: ["VADER sentiment", "LDA topics", "Experience drivers"],
+      insight: "Topic modeling is the strongest interpretive layer because it explains why sentiment changes instead of only labeling reviews positive or negative.",
+      metrics: [
+        { label: "Analysis", value: "Sentiment + topics" },
+        { label: "Methods", value: "VADER + LDA" },
+        { label: "Use case", value: "CX improvement" }
+      ]
+    },
+    "restaurant-recommendation-system": {
+      heading: "Hybrid recommendation logic for restaurant matching.",
+      intro: "This visual separates the recommendation system into preference, similarity, location, rating, and network signals.",
+      chartTitle: "Recommendation signal mix",
+      status: "Hybrid matching",
+      labels: ["Profile", "Cuisine", "Price", "Location", "Rating", "Network"],
+      values: [78, 84, 64, 72, 88, 58],
+      callouts: ["Cosine similarity", "Feature scaling", "Social signal"],
+      insight: "Ratings and cuisine similarity produce the strongest matching signal, while location and network data make the recommendation more practical.",
+      metrics: [
+        { label: "Model", value: "Hybrid recommender" },
+        { label: "Methods", value: "Similarity + scaling" },
+        { label: "Output", value: "Ranked matches" }
+      ]
+    },
+    "arcgis-groundwater-web-map": {
+      heading: "Spatial data turned into an interactive groundwater map.",
+      intro: "This visual tracks the GIS workflow from source layers to hosted map services, pop-ups, symbology, and public interpretation.",
+      chartTitle: "GIS publishing workflow",
+      status: "Map-ready layers",
+      labels: ["Data", "Layer", "Symbol", "Pop-up", "App", "Insight"],
+      values: [70, 86, 78, 82, 76, 68],
+      callouts: ["Hosted layers", "Pop-up design", "Delaware spatial data"],
+      insight: "The strongest value comes from layer configuration and pop-up design, where raw spatial data becomes easier for a viewer to interpret.",
+      metrics: [
+        { label: "Platform", value: "ArcGIS Online" },
+        { label: "Output", value: "Interactive map" },
+        { label: "Focus", value: "Groundwater monitoring" }
+      ]
+    },
+    "sas-covid-analysis": {
+      heading: "COVID-19 preparedness indicators analyzed in SAS.",
+      intro: "This visual compares health, economic, and infrastructure indicators used to explain preparedness differences across countries.",
+      chartTitle: "Preparedness factor signal",
+      status: "Indicators compared",
+      labels: ["GDP", "HDI", "Beds", "Sanitation", "Cases", "Outcome"],
+      values: [76, 82, 68, 72, 64, 79],
+      callouts: ["PROC SQL", "Preparedness variables", "Country comparison"],
+      insight: "The combined preparedness view is stronger than any single indicator because economic and infrastructure context change how outcomes should be interpreted.",
+      metrics: [
+        { label: "Tool", value: "SAS" },
+        { label: "Scope", value: "Global indicators" },
+        { label: "Output", value: "Preparedness view" }
+      ]
+    },
+    "netflix-dashboard": {
+      heading: "Streaming content portfolio dashboard.",
+      intro: "This visual summarizes how content volume, genre, country, release year, and ratings become strategy signals.",
+      chartTitle: "Content strategy signal",
+      status: "Dashboard-ready",
+      labels: ["Genre", "Country", "Year", "Rating", "Volume", "Strategy"],
+      values: [86, 72, 78, 68, 90, 76],
+      callouts: ["Content mix", "Release trends", "Dashboard filters"],
+      insight: "Content volume and genre distribution carry the strongest visual signal, helping the dashboard explain catalog strategy patterns quickly.",
+      metrics: [
+        { label: "Tool", value: "Tableau" },
+        { label: "Focus", value: "Content analytics" },
+        { label: "Output", value: "Interactive dashboard" }
+      ]
+    },
+    "arthaven-database": {
+      heading: "Art gallery operations modeled as a relational database.",
+      intro: "This visual connects galleries, exhibitions, artwork, artists, customers, employees, and sales into one operating model.",
+      chartTitle: "Database relationship strength",
+      status: "Logical model refined",
+      labels: ["Entities", "Keys", "Relations", "Sales", "Artist", "Reports"],
+      values: [92, 84, 88, 78, 72, 80],
+      callouts: ["LDM reviewed", "Sales accountability", "Artist specialization"],
+      insight: "The relationship layer is the strongest signal because exhibitions, artwork, sales, employees, and customers need clean links for reliable reporting.",
+      metrics: [
+        { label: "Scope", value: "Database systems" },
+        { label: "Model", value: "Logical data model" },
+        { label: "Evidence", value: `${artifactCount} files` }
+      ]
+    },
+    "fintech-mapping": {
+      heading: "Fintech integration fields mapped into a usable data model.",
+      intro: "This visual shows how messy source fields move through mapping, validation, standardization, and integration readiness.",
+      chartTitle: "Integration quality pipeline",
+      status: "Mapping logic defined",
+      labels: ["Source", "Map", "Rules", "Validate", "API", "Monitor"],
+      values: [74, 92, 84, 88, 70, 64],
+      callouts: ["Field mapping", "Validation rules", "Integration readiness"],
+      insight: "Mapping and validation are the highest-value stages because fintech data must be reliable before it can support downstream automation.",
+      metrics: [
+        { label: "Scope", value: "Fintech data" },
+        { label: "Focus", value: "Mapping + validation" },
+        { label: "Output", value: "Integration model" }
+      ]
+    },
+    "nvidia-pestle": {
+      heading: "Nvidia strategy factors organized through PESTLE.",
+      intro: "This visual turns macro-environmental factors into a structured strategy scan across business risk and opportunity.",
+      chartTitle: "PESTLE factor strength",
+      status: "Strategy scan",
+      labels: ["Political", "Economic", "Social", "Tech", "Legal", "Env"],
+      values: [66, 78, 58, 94, 72, 60],
+      callouts: ["AI demand", "Regulatory pressure", "Supply-chain exposure"],
+      insight: "Technology is the dominant opportunity signal, while legal and economic factors frame the strategic risk around AI growth.",
+      metrics: [
+        { label: "Framework", value: "PESTLE" },
+        { label: "Company", value: "Nvidia" },
+        { label: "Focus", value: "AI strategy" }
+      ]
+    },
+    "risk-perception-brand-equity": {
+      heading: "Risk perception connected to brand equity outcomes.",
+      intro: "This visual frames the research model as a path from perceived risk to trust, brand equity, and customer decision intent.",
+      chartTitle: "Research model signal",
+      status: "Mediation view",
+      labels: ["Risk", "Trust", "Equity", "Intent", "Loyalty", "Result"],
+      values: [82, 68, 78, 72, 66, 74],
+      callouts: ["Research design", "Mediation concept", "Brand decision path"],
+      insight: "The visual emphasizes the mediator logic: risk perception matters because it can shape trust and brand equity before purchase or loyalty decisions.",
+      metrics: [
+        { label: "Scope", value: "Marketing analytics" },
+        { label: "Model", value: "Mediation concept" },
+        { label: "Date", value: "Spring 2024" }
+      ]
+    }
+  };
+  return { ...base, ...(profiles[project.id] || {}) };
 }
 
 function buildProjectFindings(project) {

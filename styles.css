@@ -1510,6 +1510,17 @@ p {
   background-size: 34px 34px;
 }
 
+.report-chart::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(85, 214, 255, 0.08), transparent);
+  opacity: 0.72;
+  transform: translateX(-100%);
+  animation: scanAcross 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
 .report-chart-head {
   position: absolute;
   top: 18px;
@@ -1566,7 +1577,7 @@ p {
   position: absolute;
   inset: 76px 28px 54px 38px;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
   align-items: end;
   gap: 14px;
 }
@@ -1577,6 +1588,18 @@ p {
   border-radius: 6px 6px 2px 2px;
   background: linear-gradient(180deg, rgba(85, 214, 255, 0.82), rgba(100, 240, 180, 0.24));
   animation: barLift 3.2s ease-in-out infinite;
+}
+
+.report-bars em {
+  position: absolute;
+  top: -22px;
+  right: 0;
+  left: 0;
+  color: rgba(230, 241, 255, 0.86);
+  font-size: 0.64rem;
+  font-style: normal;
+  font-weight: 850;
+  text-align: center;
 }
 
 .report-bars span {
@@ -1593,6 +1616,7 @@ p {
 .report-chart svg {
   position: absolute;
   inset: 84px 30px 62px 38px;
+  z-index: 3;
   width: calc(100% - 68px);
   height: calc(100% - 146px);
   pointer-events: none;
@@ -1606,6 +1630,33 @@ p {
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
   filter: drop-shadow(0 0 7px rgba(100, 240, 180, 0.45));
+}
+
+.report-callouts {
+  position: absolute;
+  top: 56px;
+  right: 24px;
+  z-index: 4;
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: min(520px, 60%);
+}
+
+.report-callouts span {
+  border: 1px solid rgba(85, 214, 255, 0.22);
+  border-radius: 999px;
+  padding: 5px 8px;
+  color: rgba(230, 241, 255, 0.82);
+  background: rgba(7, 17, 31, 0.78);
+  font-size: 0.64rem;
+  font-weight: 800;
+}
+
+@keyframes scanAcross {
+  0%, 55% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .report-narrative {
@@ -3480,6 +3531,17 @@ summary {
 
   .report-kpis {
     grid-template-columns: 1fr;
+  }
+
+  .report-callouts {
+    position: static;
+    justify-content: flex-start;
+    max-width: none;
+    margin: -18px 0 38px;
+  }
+
+  .report-chart {
+    min-height: 330px;
   }
 
   .report-image {
