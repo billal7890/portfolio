@@ -1380,8 +1380,8 @@ function renderProjectReport() {
       <div class="report-facts">
         <article><span>Business question</span><p>${escapeHtml(project.reason)}</p></article>
         <article><span>Tools and methods</span><p>${escapeHtml(project.tech)}</p></article>
-        <article><span>My approach</span><p>${escapeHtml(project.process)}</p></article>
       </div>
+      <article class="report-approach"><span>My approach</span><p>${escapeHtml(project.process)}</p></article>
     </section>
     ${renderProjectVisualStory(project)}
     <section class="report-narrative">

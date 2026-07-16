@@ -1400,8 +1400,8 @@ p {
 
 .report-overview {
   display: grid;
-  grid-template-columns: minmax(460px, 1.15fr) minmax(280px, 0.85fr);
-  gap: var(--space-4);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-3);
   align-items: start;
 }
 
@@ -1410,7 +1410,7 @@ p {
   place-items: center;
   min-width: 0;
   min-height: 0;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -1428,7 +1428,7 @@ p {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  padding: clamp(12px, 2vw, 24px);
+  padding: clamp(10px, 1.5vw, 18px);
   box-sizing: border-box;
 }
 
@@ -1438,13 +1438,19 @@ p {
   align-self: stretch;
 }
 
-.report-facts article {
+.report-facts article,
+.report-approach {
   border-left: 3px solid var(--accent);
   padding: 14px 18px;
   background: rgba(19, 36, 59, 0.72);
 }
 
-.report-facts span {
+.report-approach {
+  grid-column: 1 / -1;
+}
+
+.report-facts span,
+.report-approach span {
   display: block;
   margin-bottom: 5px;
   color: var(--accent-dark);
@@ -1453,7 +1459,8 @@ p {
   text-transform: uppercase;
 }
 
-.report-facts p {
+.report-facts p,
+.report-approach p {
   margin: 0;
   font-size: 0.9rem;
   line-height: 1.62;
@@ -2701,7 +2708,11 @@ summary {
   }
 
   .report-facts {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .report-approach {
+    grid-column: 1;
   }
 
   .hero {
@@ -3477,6 +3488,10 @@ summary {
 
   .report-facts {
     grid-template-columns: 1fr;
+  }
+
+  .report-approach {
+    grid-column: auto;
   }
 
   .project-card img {
