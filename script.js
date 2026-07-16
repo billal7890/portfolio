@@ -1401,6 +1401,7 @@ function renderProjectVisualStory(project) {
   const seed = project.title.split("").reduce((sum, letter) => sum + letter.charCodeAt(0), 0);
   const values = Array.from({ length: 7 }, (_, index) => 34 + ((seed * (index + 3)) % 58));
   const points = values.map((value, index) => `${index * 52 + 4},${100 - value}`).join(" ");
+  const stages = ["Question", "Data", "Model", "Visual", "Review", "Result", "Next"];
   return `
     <section class="report-visual-story">
       <div class="section-heading"><p class="eyebrow">Analytical View</p><h2>A visual reading of the project workflow.</h2><p>This visual summarizes relative analytical activity across the project stages. It is a portfolio visualization, while exact results and source files remain identified in the report.</p></div>
@@ -1410,8 +1411,11 @@ function renderProjectVisualStory(project) {
         <article><span>Artifacts</span><strong>${project.files?.length || 0}</strong></article>
       </div>
       <div class="report-chart">
-        <div class="report-bars">${values.map((value, index) => `<i style="--report-height:${value}%"><span>S${index + 1}</span></i>`).join("")}</div>
+        <div class="report-chart-head"><strong>Project workflow signal</strong><span>Decision-support view</span></div>
+        <div class="report-chart-axis" aria-hidden="true"><span>High</span><span>Medium</span><span>Low</span></div>
+        <div class="report-bars">${values.map((value, index) => `<i style="--report-height:${value}%"><span>${stages[index]}</span></i>`).join("")}</div>
         <svg viewBox="0 0 320 110" preserveAspectRatio="none" aria-label="Project analysis trend"><polyline points="${points}"></polyline></svg>
+        <p class="report-chart-insight">Bars represent emphasis by project stage; the trend line shows how the work moves from raw context toward an actionable recommendation.</p>
       </div>
     </section>
   `;
@@ -1458,9 +1462,10 @@ function renderDashboardPreview() {
   const maxWait = Math.max(...rows.map((row) => row.wait));
   const avgWait = Math.round(rows.reduce((sum, row) => sum + row.wait, 0) / rows.length);
   const totalPassengers = rows.reduce((sum, row) => sum + row.passengers, 0);
+  const waitPoints = rows.map((row, index) => `${index * 58 + 6},${104 - (row.wait / maxWait) * 86}`).join(" ");
   return `
     <div class="dashboard-preview">
-      <h3>Airport Security Simulation Dashboard</h3>
+      <div class="dashboard-preview-title"><div><p class="eyebrow">Simulation dashboard</p><h3>Airport Security Passenger Flow</h3></div><span>Sample synthetic model</span></div>
       <div class="dashboard-kpis">
         <div><span>Passengers</span><strong>${totalPassengers.toLocaleString()}</strong></div>
         <div><span>Avg Wait</span><strong>${avgWait} min</strong></div>
@@ -1468,10 +1473,11 @@ function renderDashboardPreview() {
         <div><span>Risk Signal</span><strong>Moderate</strong></div>
       </div>
       <div class="dashboard-visuals">
-        <div class="dashboard-bars">${rows.map((row) => `<span style="--bar:${(row.passengers / maxPassengers) * 100}%"><b>${row.hour}</b></span>`).join("")}</div>
-        <div class="dashboard-line">${rows.map((row, index) => `<i style="--x:${index * 19}%;--y:${100 - (row.wait / maxWait) * 82}%"></i>`).join("")}</div>
+        <div class="dashboard-bars" aria-label="Passenger volume by time">${rows.map((row) => `<span style="--bar:${(row.passengers / maxPassengers) * 100}%"><em>${row.passengers}</em><b>${row.hour}</b></span>`).join("")}</div>
+        <div class="dashboard-line" aria-label="Average wait trend"><strong>Wait-time trend</strong><svg viewBox="0 0 320 120" preserveAspectRatio="none"><polyline points="${waitPoints}"></polyline></svg>${rows.map((row, index) => `<i style="--x:${index * 19}%;--y:${100 - (row.wait / maxWait) * 82}%"><span>${row.wait}m</span></i>`).join("")}</div>
         <div class="dashboard-donut"><span>Queue<br>Pressure</span></div>
       </div>
+      <p class="dashboard-preview-note">The preview compares passenger volume, estimated wait time, and queue pressure so a viewer can understand the operational tradeoff before opening the full project file.</p>
     </div>
   `;
 }
