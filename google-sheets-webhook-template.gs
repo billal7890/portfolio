@@ -20,6 +20,15 @@ const SHEET_ID = "1c5W6a5iPO9FvLJymVA6wwM1PIv-Js-ifm3Q_bcESOPc";
 const SHEET_NAME = "Portfolio Contacts";
 
 function doPost(e) {
+  if (!e || !e.postData) {
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        ok: false,
+        message: "Run testWebhook() inside Apps Script, or submit the website contact form. doPost(e) needs a real POST request."
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
   const payload = JSON.parse(e.postData.contents || "{}");
   const data = payload.form_data || payload;
   const sheet = getOrCreateSheet_();
@@ -74,4 +83,29 @@ function getOrCreateSheet_() {
 function normalizeList_(value) {
   if (Array.isArray(value)) return value.join(", ");
   return value || "";
+}
+
+function testWebhook() {
+  const fakeEvent = {
+    postData: {
+      contents: JSON.stringify({
+        form_data: {
+          name: "Test Visitor",
+          email: "test@example.com",
+          phone: "000-000-0000",
+          occupation: "Portfolio tester",
+          company: "Test Company",
+          linkedin: "https://linkedin.com/in/example",
+          subject: "Webhook test",
+          reason: "Portfolio feedback",
+          message: "This is a test row from Apps Script.",
+          contact_checklist: ["Review portfolio project", "Share feedback"],
+          follow_up_checklist: ["Reply by email"],
+          submission_timestamp: new Date().toLocaleString()
+        }
+      })
+    }
+  };
+
+  return doPost(fakeEvent);
 }
