@@ -4,7 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Admin | Billal Javed</title>
+    <title>Local Admin | Billal Javed Portfolio</title>
+    <meta name="description" content="Local portfolio editor for Billal Javed. This page is intended for local demo editing and should not be treated as production authentication." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Local Admin | Billal Javed Portfolio" />
+    <meta property="og:description" content="Local portfolio editor for Billal Javed. This page is intended for local demo editing and should not be treated as production authentication." />
+    <meta property="og:image" content="assets/project-portfolio-analytics.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Local Admin | Billal Javed Portfolio" />
+    <meta name="twitter:description" content="Local portfolio editor for Billal Javed. This page is intended for local demo editing and should not be treated as production authentication." />
+    <meta name="twitter:image" content="assets/project-portfolio-analytics.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body data-page="admin">
@@ -292,6 +301,7 @@
             <summary>Security and Deployment Notes</summary>
             <div class="security-admin-card">
               <h2>Static demo security</h2>
+              <p><strong>Recommended workflow:</strong> use this Admin page locally to prepare portfolio content, then publish the updated files to GitHub. Do not rely on this client-side editor as secure production authentication.</p>
               <p>This Admin editor is protected for local/demo use only. Client-side passwords can be viewed by technical users after deployment, so do not treat this as production authentication.</p>
               <p>Before publishing a real editable Admin online, connect authentication through Firebase Auth, Supabase Auth, Auth0, or a server-side login. Keep private editor actions behind backend rules, not only JavaScript.</p>
               <ul>
