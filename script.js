@@ -695,8 +695,7 @@ function renderContent() {
 function setupContactRedirect() {
   const redirect = document.getElementById("contactRedirect");
   if (redirect) {
-    const returnUrl = new URL(window.location.href);
-    returnUrl.search = "?sent=1";
+    const returnUrl = new URL("thanks.html", window.location.href);
     returnUrl.hash = "";
     redirect.value = returnUrl.href;
   }
@@ -2004,8 +2003,11 @@ function renderAdminLists() {
         <strong>${escapeHtml(message.subject)}</strong>
         <p>${escapeHtml(message.name)} / ${escapeHtml(message.email)} / ${escapeHtml(message.reason)}</p>
         <p>${escapeHtml(message.message)}</p>
+        ${message.phone ? `<p><strong>Phone:</strong> ${escapeHtml(message.phone)}</p>` : ""}
         ${message.occupation || message.company ? `<p>${escapeHtml(message.occupation || "")} ${message.company ? "/ " + escapeHtml(message.company) : ""}</p>` : ""}
         ${message.linkedin ? `<p><strong>Profile:</strong> ${escapeHtml(message.linkedin)}</p>` : ""}
+        ${message.contactChecklist ? `<p><strong>Contact checklist:</strong> ${escapeHtml(message.contactChecklist)}</p>` : ""}
+        ${message.followUpChecklist ? `<p><strong>Follow-up checklist:</strong> ${escapeHtml(message.followUpChecklist)}</p>` : ""}
         <small>${escapeHtml(message.time)}</small>
       </div>
     `).join("")
@@ -2132,16 +2134,25 @@ function handleResumeDownload(event) {
 function handleContactSubmit(event) {
   const form = event.currentTarget;
   const data = new FormData(form);
+  const timestamp = new Date().toLocaleString();
+  const email = data.get("email");
+  const replyTo = document.getElementById("replyToField");
+  const timestampField = document.getElementById("submissionTimestamp");
+  if (replyTo) replyTo.value = email || "";
+  if (timestampField) timestampField.value = timestamp;
   state.messages.unshift({
     name: data.get("name"),
-    email: data.get("email"),
+    email,
+    phone: data.get("phone"),
     occupation: data.get("occupation"),
     company: data.get("company"),
     linkedin: data.get("linkedin"),
     subject: data.get("subject"),
     reason: data.get("reason"),
     message: data.get("message"),
-    time: new Date().toLocaleString()
+    contactChecklist: data.getAll("contact_checklist").join(", "),
+    followUpChecklist: data.getAll("follow_up_checklist").join(", "),
+    time: timestamp
   });
   state.tracking.contactSubmissions += 1;
   saveState();

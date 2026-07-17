@@ -88,13 +88,48 @@ git push -u origin main
 
 ## Contact Form
 
-The contact form uses FormSubmit and sends submissions to:
+The contact form uses FormSubmit and the verified endpoint:
 
 ```text
-billaljaved7@gmail.com
+https://formsubmit.co/el/zudigo
 ```
 
-FormSubmit may require a one-time email activation after the first submission.
+Current form features:
+
+- Reply-To is set from the visitor email.
+- The email template uses FormSubmit's `table` layout.
+- Submissions redirect to `thanks.html`.
+- A spam honeypot and blacklist are included.
+- The form asks for name, email, phone, occupation, company, reason, message, contact checklist, and follow-up checklist.
+- reCAPTCHA is not disabled, so FormSubmit autoresponse can work.
+
+FormSubmit works only from a local web server or a published website. It will not work correctly from a `file:///` page.
+
+## Connect Google Sheets
+
+FormSubmit can forward each submission to a webhook. This repository includes:
+
+```text
+google-sheets-webhook-template.gs
+```
+
+To connect a spreadsheet:
+
+1. Create a Google Sheet.
+2. Copy the Sheet ID from the URL.
+3. Open **Extensions > Apps Script**.
+4. Paste the code from `google-sheets-webhook-template.gs`.
+5. Replace `PASTE_YOUR_GOOGLE_SHEET_ID_HERE`.
+6. Deploy as a Web App.
+7. Set access to **Anyone**.
+8. Copy the Web App URL.
+9. Add this hidden input inside the `contact.html` form:
+
+```html
+<input type="hidden" name="_webhook" value="YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL">
+```
+
+After that, submissions should be emailed through FormSubmit and appended to the Google Sheet.
 
 ## Privacy Note
 
