@@ -1,6 +1,6 @@
 const STORAGE_KEY = "billalOnePagePortfolioV1";
 document.documentElement.classList.add("js");
-const CONTENT_VERSION = "2026-07-18-business-analytics-resume-alignment";
+const CONTENT_VERSION = "2026-07-18-about-profile-polish";
 const ADMIN_EMAIL = "billaljaved7@gmail.com";
 // Static demo only. Do not use client-side passwords in production; use Firebase/Auth0/Supabase or server-side authentication.
 const ADMIN_PASSWORD = "hello@7890";
@@ -413,15 +413,15 @@ const defaultState = {
   contentVersion: CONTENT_VERSION,
   homeTitle: "I translate business uncertainty into analytical decisions.",
   homeIntro: "I am Billal Javed, an M.S. Business Analytics and Information Management graduate student at the University of Delaware. I connect finance, operations, data systems, dashboards, simulation, and AI-supported tools to turn business questions into clear, decision-ready analysis.",
-  aboutText: "I combine an accounting and finance foundation with graduate training in business analytics and information management. My work focuses on data cleaning, modeling, dashboard development, simulation, financial analysis, and clear communication for business decisions.",
+  aboutText: "I bring together an accounting and finance foundation with graduate training in business analytics and information management at the University of Delaware. My work spans data analysis, visualization, simulation, operations, financial analysis, and decision-focused communication.",
   content: {
     aboutHeading: "Business analytics, financial insight, and practical execution.",
     portfolioHeading: "Analytics projects, dashboards, simulations, and leadership work.",
     liveSnapshotHeading: "A simple view of how visitors interact with this portfolio.",
     liveSnapshotIntro: "This section reads local website activity and turns it into a small analytics snapshot: visits, clicks, portfolio interest, project likes, blog views, contact submissions, and resume downloads. It is a demo of how raw interaction data can become a readable business signal.",
     profileStatus: "Expected graduation: December 2026 · Business analytics, finance, operations, and decision support.",
-    aboutKicker: "A finance foundation expanded through analytics, systems, and simulation.",
-    aboutSecondary: "I approach analytics as a business discipline first. My accounting and finance background helps me understand performance, risk, variance, and commercial context, while my graduate work strengthens the technical side: SQL, Python, Power BI, Tableau, SAS, simulation, data modeling, and unstructured data analysis. I am most interested in work where clean data, thoughtful metrics, and clear storytelling help people make better decisions.",
+    aboutKicker: "A business foundation strengthened by analytical thinking.",
+    aboutSecondary: "I approach analytics as a business discipline, not simply a technical exercise. My accounting and finance background helps me understand performance, risk, variance, and commercial context, while graduate work in data systems, visualization, simulation, SQL, Python, Power BI, Tableau, SAS, and AI-supported tools helps me test ideas and communicate evidence clearly. Experience in housing operations, food service, student leadership, and event coordination has also strengthened the practical side of my work: listening carefully, organizing priorities, collaborating across teams, and following through under pressure.",
     skillsHeading: "A focused toolkit for analytics, reporting, modeling, and business communication.",
     skillsIntro: "My skills are built around the work I can explain and defend: cleaning data, building dashboards, developing KPIs, analyzing financial and operational signals, modeling uncertainty, and communicating recommendations clearly.",
     experienceHeading: "Experience that connects operations, service, leadership, and analytical judgment.",
