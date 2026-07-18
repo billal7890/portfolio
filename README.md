@@ -8,7 +8,7 @@ Personal portfolio website for Billal Javed, focused on business analytics, data
 - Home, About, Portfolio, Blog, Contact, Resume, project reports, and portfolio dashboard pages
 - Project cards with detailed report pages
 - Certifications and supporting files
-- Contact form through FormSubmit
+- Contact form through Google Apps Script email and Google Sheets backend
 - Local demo Admin editor
 - Local interaction tracking for demo analytics
 
@@ -88,32 +88,32 @@ git push -u origin main
 
 ## Contact Form
 
-The contact form uses FormSubmit and the verified endpoint:
+The contact form uses a Google Apps Script Web App endpoint:
 
 ```text
-https://formsubmit.co/el/zudigo
+https://script.google.com/macros/s/AKfycbw-9Pfpl7fSAZmIyTWQm_1xZ9OiNv9YTMa2rCWw71KbFDlo4Ny1ZVyoFSsJVzvB0xyfLQ/exec
 ```
 
-Current form features:
+Current flow:
 
-- Reply-To is set from the visitor email.
-- The email template uses FormSubmit's `table` layout.
-- Submissions redirect to `thanks.html`.
-- A spam honeypot and blacklist are included.
+- JavaScript sends the submission to Google Apps Script.
+- Apps Script records the row in the `Email_response` sheet tab.
+- Apps Script emails `billaljaved7@gmail.com`.
+- The visitor is redirected to `thanks.html`.
+- A spam honeypot and blacklist field are included.
 - The form asks for name, email, phone, occupation, company, reason, message, contact checklist, and follow-up checklist.
-- reCAPTCHA is not disabled, so FormSubmit autoresponse can work.
 
-FormSubmit works only from a local web server or a published website. It will not work correctly from a `file:///` page.
+The Apps Script code must be pasted into Google Apps Script and deployed as a Web App with **Execute as: Me** and **Who has access: Anyone**.
 
 ## Connect Google Sheets
 
-FormSubmit can forward each submission to a webhook. This repository includes:
+This repository includes:
 
 ```text
 google-sheets-webhook-template.gs
 ```
 
-To connect a spreadsheet:
+To connect or repair the spreadsheet/email backend:
 
 1. Create a Google Sheet.
 2. Copy the Sheet ID from the URL.
@@ -123,13 +123,9 @@ To connect a spreadsheet:
 6. Deploy as a Web App.
 7. Set access to **Anyone**.
 8. Copy the Web App URL.
-9. Add this hidden input inside the `contact.html` form:
+9. If Google gives a new Web App URL, update `GOOGLE_SHEETS_WEBHOOK_URL` in `script.js` and the `action` in `contact.html`.
 
-```html
-<input type="hidden" name="_webhook" value="YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL">
-```
-
-After that, submissions should be emailed through FormSubmit and appended to the Google Sheet.
+After that, submissions should be emailed to Billal Javed and appended to the `Email_response` tab in the Google Sheet.
 
 ## Privacy Note
 

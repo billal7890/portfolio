@@ -28,7 +28,7 @@ const defaultProjects = [
     title: "Business Analytics Portfolio Website",
     category: "Web Development / Personal Branding",
     date: "Summer 2026",
-    tech: "HTML, CSS, JavaScript, localStorage, FormSubmit, Git, GitHub Pages, AI-assisted development workflow",
+    tech: "HTML, CSS, JavaScript, localStorage, Google Apps Script, Google Sheets, Git, GitHub Pages, AI-assisted development workflow",
     summary: "Designed and developed a responsive business analytics portfolio that presents projects, academic background, leadership experience, writing, dashboards, files, and professional profile in one consistent digital experience.",
     reason: "I wanted more than a resume attachment. My goal was to create an accessible professional platform where visitors can understand how I approach business problems, explore the evidence behind my projects, and see how my analytical and communication skills connect.",
     process: "I began by defining the audience, content structure, visual direction, and core visitor journeys. I planned separate pages for Home, About, Portfolio, Blog, Contact, and detailed project reports. I used AI-assisted development tools to speed up implementation, debugging, and organization, while I directed the requirements, content, design feedback, source materials, testing priorities, wording, and final decisions.",
@@ -2151,7 +2151,8 @@ function handleResumeDownload(event) {
   renderAdminStats();
 }
 
-function handleContactSubmit(event) {
+async function handleContactSubmit(event) {
+  event.preventDefault();
   const form = event.currentTarget;
   const data = new FormData(form);
   const timestamp = new Date().toLocaleString();
@@ -2177,9 +2178,20 @@ function handleContactSubmit(event) {
   state.tracking.contactSubmissions += 1;
   saveState();
   const note = document.getElementById("contactNote");
-  if (note) note.hidden = false;
+  if (note) {
+    note.textContent = "Sending your message now.";
+    note.hidden = false;
+  }
   renderAdmin();
-  sendContactToSheet(state.messages[0]);
+  try {
+    await sendContactToSheet(state.messages[0]);
+    window.location.href = "https://billal7890.github.io/portfolio/thanks.html";
+  } catch (error) {
+    if (note) {
+      note.textContent = "The message could not be sent automatically. Please email billaljaved7@gmail.com directly.";
+      note.hidden = false;
+    }
+  }
 }
 
 async function sendContactToSheet(message) {
@@ -2187,7 +2199,24 @@ async function sendContactToSheet(message) {
   await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
     method: "POST",
     mode: "no-cors",
-    body: JSON.stringify({ form_data: message })
+    body: JSON.stringify({
+      form_data: {
+        name: message.name,
+        email: message.email,
+        phone: message.phone,
+        occupation: message.occupation,
+        company: message.company,
+        linkedin: message.linkedin,
+        subject: message.subject,
+        reason: message.reason,
+        message: message.message,
+        contactChecklist: message.contactChecklist,
+        followUpChecklist: message.followUpChecklist,
+        contact_checklist: message.contactChecklist,
+        follow_up_checklist: message.followUpChecklist,
+        submission_timestamp: message.time
+      }
+    })
   });
 }
 
