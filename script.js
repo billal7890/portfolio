@@ -1,6 +1,6 @@
 const STORAGE_KEY = "billalOnePagePortfolioV1";
 document.documentElement.classList.add("js");
-const CONTENT_VERSION = "2026-07-18-about-profile-polish";
+const CONTENT_VERSION = "2026-07-18-about-status-card-match";
 const ADMIN_EMAIL = "billaljaved7@gmail.com";
 // Static demo only. Do not use client-side passwords in production; use Firebase/Auth0/Supabase or server-side authentication.
 const ADMIN_PASSWORD = "hello@7890";
