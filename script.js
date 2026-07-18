@@ -17,7 +17,7 @@ const OLD_HOME_TITLE = "I turn business questions into clear analytical work.";
 const OLD_HOME_INTRO = "I am Billal Javed, an M.S. Business Analytics and Information Management student at the University of Delaware. I work across analytics, finance, operations, simulation, data visualization, and AI-supported decision-making to make uncertainty easier to act on.";
 const OLD_ABOUT_TEXT = "I come from an accounting and finance background, and I am building that foundation into business analytics, operations, data visualization, simulation, and AI-supported decision-making. At the University of Delaware, I am learning how to turn complex business questions into structured analysis and useful decisions.";
 const PREVIOUS_ABOUT_TEXT = "My background started in accounting and finance, and I am now building that foundation into business analytics, information management, operations analysis, simulation, and data visualization. At the University of Delaware, I focus on turning complex business problems into structured analysis, clear communication, and practical recommendations.";
-const GOOGLE_SHEETS_WEBHOOK_URL = ""; // Static demo placeholder: add a Google Apps Script/Firebase/Supabase endpoint here for real Google Sheets storage.
+const GOOGLE_SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw-9Pfpl7fSAZmIyTWQm_1xZ9OiNv9YTMa2rCWw71KbFDlo4Ny1ZVyoFSsJVzvB0xyfLQ/exec";
 let cropImage = null;
 let croppedProfileData = "";
 let activePreviewElement = null;
@@ -2180,9 +2180,6 @@ function handleContactSubmit(event) {
   if (note) note.hidden = false;
   renderAdmin();
   sendContactToSheet(state.messages[0]);
-  window.setTimeout(() => {
-    window.location.href = "https://billal7890.github.io/portfolio/thanks.html";
-  }, 900);
 }
 
 async function sendContactToSheet(message) {
@@ -2190,8 +2187,7 @@ async function sendContactToSheet(message) {
   await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
     method: "POST",
     mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(message)
+    body: JSON.stringify({ form_data: message })
   });
 }
 

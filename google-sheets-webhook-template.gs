@@ -29,7 +29,12 @@ function doPost(e) {
       .setMimeType(ContentService.MimeType.JSON);
   }
 
-  const payload = JSON.parse(e.postData.contents || "{}");
+  let payload = {};
+  try {
+    payload = JSON.parse(e.postData.contents || "{}");
+  } catch (error) {
+    payload = e.parameter || {};
+  }
   const data = payload.form_data || payload;
   const sheet = getOrCreateSheet_();
 
