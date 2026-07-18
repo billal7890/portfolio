@@ -2,7 +2,7 @@
   Google Apps Script backend for Billal Javed portfolio contact submissions.
 
   What it does:
-  - Records each contact form submission in the Email_response sheet tab.
+  - Records each contact form submission in the Portfolio Contacts sheet tab.
   - Sends an email notification to Billal Javed.
 
   Deploy settings:
@@ -17,8 +17,22 @@
 */
 
 const SHEET_ID = "1c5W6a5iPO9FvLJymVA6wwM1PIv-Js-ifm3Q_bcESOPc";
-const SHEET_NAME = "Email_response";
+const SHEET_NAME = "Portfolio Contacts";
 const TO_EMAIL = "billaljaved7@gmail.com";
+
+const HEADERS = [
+  "DATE",
+  "EMAIL ADDRESS",
+  "NAME",
+  "NUMBER",
+  "OCCUPATION",
+  "COMPANY",
+  "LINKDIN",
+  "SUBJECT",
+  "EMAIL BODY",
+  "REASON",
+  "AI REPLY"
+];
 
 function doPost(e) {
   if (!e || !e.postData) {
@@ -32,21 +46,21 @@ function doPost(e) {
   const sheet = getOrCreateSheet_();
   const submittedAt = data.submission_timestamp || new Date().toLocaleString();
   const subject = data.subject || "Portfolio contact submission";
-  const message = data.message || "";
+  const message = data.message || data.email_body || "";
   const aiReply = buildReplyDraft_(data);
 
   sheet.appendRow([
-    data.name || "",
+    submittedAt,
     data.email || data._replyto || "",
+    data.name || "",
     data.phone || data.number || "",
     data.occupation || "",
     data.company || "",
-    data.linkedin || data.link || "",
-    data.reason || "",
+    data.linkedin || data.linkdin || data.link || "",
     subject,
     message,
-    aiReply,
-    submittedAt
+    data.reason || "",
+    aiReply
   ]);
 
   MailApp.sendEmail({
@@ -75,19 +89,9 @@ function getOrCreateSheet_() {
   if (!sheet) sheet = spreadsheet.insertSheet(SHEET_NAME);
 
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow([
-      "Contact name",
-      "EMAIL ADDRESS",
-      "NUMBER",
-      "OCCUPATION",
-      "COMPANY",
-      "LINK",
-      "REASON",
-      "Email subject",
-      "Email body",
-      "AI reply",
-      "Submitted at"
-    ]);
+    sheet.appendRow(HEADERS);
+  } else {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
   }
 
   return sheet;
@@ -102,10 +106,10 @@ function buildEmailHtml_(data, aiReply, submittedAt) {
       <tr><th align="left">Phone</th><td>${escapeHtml_(data.phone || data.number)}</td></tr>
       <tr><th align="left">Occupation</th><td>${escapeHtml_(data.occupation)}</td></tr>
       <tr><th align="left">Company</th><td>${escapeHtml_(data.company)}</td></tr>
-      <tr><th align="left">Profile Link</th><td>${escapeHtml_(data.linkedin || data.link)}</td></tr>
+      <tr><th align="left">Profile Link</th><td>${escapeHtml_(data.linkedin || data.linkdin || data.link)}</td></tr>
       <tr><th align="left">Reason</th><td>${escapeHtml_(data.reason)}</td></tr>
       <tr><th align="left">Subject</th><td>${escapeHtml_(data.subject)}</td></tr>
-      <tr><th align="left">Message</th><td>${escapeHtml_(data.message)}</td></tr>
+      <tr><th align="left">Message</th><td>${escapeHtml_(data.message || data.email_body)}</td></tr>
       <tr><th align="left">Suggested reply</th><td>${escapeHtml_(aiReply)}</td></tr>
       <tr><th align="left">Submitted at</th><td>${escapeHtml_(submittedAt)}</td></tr>
     </table>
@@ -120,10 +124,10 @@ function buildEmailText_(data, aiReply, submittedAt) {
     "Phone: " + (data.phone || data.number || ""),
     "Occupation: " + (data.occupation || ""),
     "Company: " + (data.company || ""),
-    "Profile Link: " + (data.linkedin || data.link || ""),
+    "Profile Link: " + (data.linkedin || data.linkdin || data.link || ""),
     "Reason: " + (data.reason || ""),
     "Subject: " + (data.subject || ""),
-    "Message: " + (data.message || ""),
+    "Message: " + (data.message || data.email_body || ""),
     "Suggested reply: " + aiReply,
     "Submitted at: " + submittedAt
   ].join("\n");

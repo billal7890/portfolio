@@ -2200,12 +2200,15 @@ async function sendContactToSheet(message) {
         name: message.name,
         email: message.email,
         phone: message.phone,
+        number: message.phone,
         occupation: message.occupation,
         company: message.company,
         linkedin: message.linkedin,
+        linkdin: message.linkedin,
         subject: message.subject,
         reason: message.reason,
         message: message.message,
+        email_body: message.message,
         submission_timestamp: message.time
       }
     })
