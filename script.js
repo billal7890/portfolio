@@ -53,10 +53,10 @@ const defaultProjects = [
     title: "Airport Security & Passenger Flow Optimization",
     category: "Simulation / Operations Analytics",
     date: "Spring 2026",
-    tech: "Monte Carlo simulation, agent-based modeling, discrete-event simulation, Python, scenario analysis",
+    tech: "Monte Carlo simulation, agent-based modeling, discrete-event simulation, Python, scenario analysis, risk assessment",
     summary: "Modeled airport checkpoint operations to evaluate passenger flow, risk behavior, scanner capacity, and bottlenecks during peak periods.",
     reason: "To show how simulation can support operational decisions when demand, passenger behavior, and service capacity are uncertain.",
-    process: "Built Monte Carlo, agent-based, and discrete-event simulation logic, analyzed 10,000 peak-period scenarios, and compared capacity decisions across screening lane configurations.",
+    process: "Built Monte Carlo, agent-based, and discrete-event simulation logic, analyzed 10,000 peak-period scenarios, and compared capacity decisions across screening lane configurations for throughput, queue, and passenger delay risk.",
     details: "Problem solved: airport security operations must balance service speed, risk control, passenger experience, and resource limits. My role was to model checkpoint flow, test operating scenarios, and translate simulation results into staffing and capacity implications. The analysis identified scanner capacity as the key bottleneck and showed that adding a Regular lane reduced shortfall probability from 43.4% to 7.3%.",
     findings: "Scanner capacity was the dominant operational constraint. The project showed that small capacity changes can materially reduce shortfall risk when passenger arrivals and service times are uncertain.",
     recommendations: "Use simulation as a recurring planning tool for peak travel periods, compare lane-allocation strategies before implementation, and validate the model with updated airport throughput data.",
@@ -79,10 +79,10 @@ const defaultProjects = [
     title: "Student Habits vs. Academic Performance",
     category: "Power BI / Education Analytics",
     date: "Spring 2026",
-    tech: "Power BI, Power Query, DAX, data cleaning, interactive reporting",
+    tech: "Power BI, Power Query, DAX, data cleaning, data modeling, KPI tracking, interactive reporting",
     summary: "Built an interactive Power BI report analyzing how study time, attendance, screen time, wellness, and background factors relate to exam performance.",
     reason: "To explore how behavioral and demographic data can help explain academic performance patterns without reducing students to a single metric.",
-    process: "Cleaned and analyzed 1,000 student records across 16 behavioral, demographic, and academic variables using Power Query and Power BI. Built DAX measures and interactive visuals to compare performance drivers.",
+    process: "Cleaned and analyzed 1,000 student records across 16 behavioral, demographic, and academic variables using Power Query and Power BI. Built data relationships, DAX measures, KPI cards, and interactive visuals to compare performance drivers.",
     details: "Problem solved: education data can become difficult to interpret when academic, behavioral, and wellness variables are analyzed separately. My role was to prepare the dataset, model relationships, design measures, and create visuals that help users explore patterns in student performance. The dashboard connects habits and outcomes in a way that supports evidence-based discussion.",
     findings: "Study time, attendance, wellness indicators, and screen-time patterns provide more useful insight when viewed together instead of as isolated variables.",
     recommendations: "Expand the dashboard with cohort filters, intervention tracking, and predictive modeling to help educators identify support opportunities earlier.",
@@ -177,7 +177,7 @@ const defaultProjects = [
     title: "COVID-19 Economic Impact Analysis",
     category: "SAS Analytics",
     date: "Fall 2025",
-    tech: "SAS, PROC SQL, DATA steps, macros, PROC SGPLOT",
+    tech: "SAS, PROC SQL, DATA steps, macros, PROC SGPLOT, data transformation, statistical analysis",
     summary: "Built an end-to-end SAS analysis evaluating GDP and HDI based case, death, and mortality metrics.",
     reason: "To understand whether economic development alone explains pandemic preparedness.",
     process: "Cleaned and grouped country-level data, built weighted case/death metrics, compared infrastructure indicators, and summarized results through SAS visuals.",
@@ -240,11 +240,11 @@ const defaultProjects = [
     title: "AI-Powered Data Mapping for Fintech Integrations",
     category: "Fintech",
     date: "Fall 2025",
-    tech: "Data quality checks, FDX APIs, Fiserv DNA, compliance mapping",
+    tech: "Data quality validation, requirements mapping, FDX APIs, Fiserv DNA, compliance mapping, business case development",
     summary: "Hackathon project focused on compliant data mapping between fintech systems.",
     reason: "To explore how financial data can move between systems without losing accuracy or trust.",
-    process: "Supported data quality checks, business case development, and cross-functional solution planning.",
-    details: "Problem solved: fintech integrations require accurate mapping across different data standards. My role centered on data quality and business framing. Tools and concepts included FDX APIs, Fiserv DNA, compliance mapping, and product integration logic. Result: a practical solution concept with a clear business and compliance angle.",
+    process: "Supported data quality validation, requirements mapping, business case development, and cross-functional solution planning.",
+    details: "Problem solved: fintech integrations require accurate mapping across different data standards. My role centered on data quality validation, requirements mapping, business framing, and compliance-aware solution planning. Tools and concepts included FDX APIs, Fiserv DNA, compliance mapping, and product integration logic. Result: a practical solution concept with a clear business and compliance angle.",
     link: "",
     visible: true,
     likes: 0,
@@ -424,7 +424,7 @@ const defaultState = {
     skillsIntro: "My skill set combines analytical technology with business understanding, research discipline, and the interpersonal skills required to move work forward.",
     experienceHeading: "Experience that connects analysis, operations, service, and leadership.",
     experienceIntro: "Each role has developed a different part of how I work: analytical judgment, operational discipline, customer awareness, collaboration, and ownership.",
-    housingDescription: "Coordinate front-desk and housing operations, respond to resident needs, support room and maintenance logistics, maintain records, and use Excel and Google Workspace for tracking, audits, inventory, and performance reporting.",
+    housingDescription: "Coordinate front-desk and housing operations, respond to resident needs, support room and maintenance logistics, maintain records, and use Excel and Google Workspace for tracking, audits, and performance reporting.",
     aramarkDescription: "Work in a fast-paced service environment where accuracy, food-safety awareness, teamwork, time management, and clear customer communication directly affect daily performance and the customer experience.",
     gsaDescription: "Coordinate with students, faculty, the BAIM community, and University departments to plan programs that strengthen student engagement and professional development.",
     internshipDescription: "Performed fundamental and technical analysis across stocks, commodities, and currencies, collaborated with business development, marketing, and finance teams, and helped communicate investment opportunities to prospective investors.",
@@ -445,11 +445,11 @@ const defaultState = {
     workshopOutcome: "The workshop guided participants through data ethics, storytelling with data, data management, and practical analysis. Students applied the workflow to real-world datasets, shared their findings, and gained an opportunity to earn a LinkedIn-shareable badge recognizing their participation and professional development."
   },
   skillGroups: [
-    { title: "Analytics & Programming", description: "Building, cleaning, testing, and interpreting analytical work.", skills: "Python, SQL, R Studio, SAS, SPSS, SMARTPLS, Google Colab, Statistical Analysis" },
-    { title: "Business Intelligence & Visualization", description: "Turning complex information into clear visual decision support.", skills: "Power BI, Tableau, DAX, Excel, ArcGIS, Geospatial Visualization, Dashboard Design, Data Storytelling" },
-    { title: "Modeling, Simulation & AI", description: "Exploring uncertainty, behavior, risk, and possible outcomes.", skills: "Quantitative Modeling, Monte Carlo, Agent-Based Modeling, Discrete-Event Simulation, Simulation with AI, Machine Learning Tools, Risk Analysis" },
-    { title: "Finance, Strategy & Research", description: "Connecting analytical findings to commercial and organizational context.", skills: "Financial Modeling, Market Research, Business Strategy, Risk Management, Strategic Thinking, Sustainability Awareness, Business Development" },
-    { title: "Leadership & Operations", description: "Coordinating people, priorities, service, and project delivery.", skills: "Project Management, Event Planning, Stakeholder Communication, Cross-Team Coordination, Customer Service, Facilitation, Time Management" },
+    { title: "Analytics & Programming", description: "Building, cleaning, testing, and interpreting analytical work.", skills: "Python, SQL, R Studio, SAS, SPSS, SMARTPLS, Google Colab, Data Cleaning, Statistical Analysis, Quantitative Analysis" },
+    { title: "Business Intelligence & Visualization", description: "Turning complex information into clear visual decision support.", skills: "Power BI, Power Query, Tableau, DAX, Excel, ArcGIS, Dashboard Development, KPI Tracking, Data Modeling, Data Storytelling" },
+    { title: "Modeling, Simulation & AI Tools", description: "Exploring uncertainty, behavior, risk, and possible outcomes.", skills: "Predictive Analytics, Monte Carlo Simulation, Agent-Based Modeling, Discrete-Event Simulation, Scenario Analysis, Risk Assessment, Decision Support" },
+    { title: "Finance, Strategy & Research", description: "Connecting analytical findings to commercial and organizational context.", skills: "Financial Modeling, Forecasting, Variance Analysis, Financial Analytics, Market Research, Business Strategy, Risk Management, Business Intelligence" },
+    { title: "Leadership & Operations", description: "Coordinating people, priorities, service, and project delivery.", skills: "Project Management, Event Planning, Stakeholder Communication, Cross-Team Coordination, Process Improvement, Customer Service, Facilitation" },
     { title: "Professional Productivity", description: "Supporting clear documentation, presentation, and collaborative work.", skills: "Microsoft Word, PowerPoint, Google Workspace, Professional Writing, Presentation, Documentation, Teamwork" }
   ],
   textStyles: {
@@ -695,9 +695,11 @@ function renderContent() {
 function setupContactRedirect() {
   const redirect = document.getElementById("contactRedirect");
   if (redirect) {
-    const returnUrl = new URL("thanks.html", window.location.href);
-    returnUrl.hash = "";
-    redirect.value = returnUrl.href;
+    const isGitHubPages = window.location.hostname.endsWith("github.io");
+    const returnUrl = isGitHubPages
+      ? "https://billal7890.github.io/portfolio/thanks.html"
+      : new URL("thanks.html", window.location.href).href;
+    redirect.value = returnUrl;
   }
   if (new URLSearchParams(window.location.search).get("sent") === "1") {
     const note = document.getElementById("contactNote");
@@ -950,14 +952,26 @@ function renderSkills() {
     "Discrete-Event Simulation",
     "Tableau",
     "Power BI",
+    "Power Query",
     "Excel",
     "DAX",
+    "Data Cleaning",
+    "Data Modeling",
+    "KPI Tracking",
+    "Business Intelligence",
+    "Dashboard Development",
+    "Data Storytelling",
     "R Studio",
     "ArcGIS",
     "Financial Modeling",
+    "Forecasting",
+    "Variance Analysis",
+    "Risk Management",
+    "Decision Support",
+    "Process Improvement",
     "Market Research",
-    "Business Strategy"
-    ,"Machine Learning / AI Tools"
+    "Business Strategy",
+    "AI Tools"
   ];
   container.innerHTML = skills.map((skill) => `<span>${skill}</span>`).join("");
 }
@@ -1001,7 +1015,7 @@ function renderResumeLinks() {
       link.classList.remove("disabled");
     } else {
       link.href = DEFAULT_RESUME_FILE;
-      link.download = "Billal_Javed_Finance_Analyst_Resume.pdf";
+      link.download = "BILLAL_RESUME.pdf";
       link.classList.remove("disabled");
     }
   });
@@ -1806,7 +1820,7 @@ function renderAdmin() {
       if (sectionForm.elements[`skills${index}`]) sectionForm.elements[`skills${index}`].value = group.skills;
     });
   }
-  setText("resumeTime", state.resumeUpdatedAt ? `Resume last updated: ${state.resumeUpdatedAt}` : "Default resume added June 7, 2026.");
+  setText("resumeTime", state.resumeUpdatedAt ? `Resume last updated: ${state.resumeUpdatedAt}` : "Default resume added July 17, 2026.");
 }
 
 function renderTextEditor() {
