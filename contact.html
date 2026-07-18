@@ -49,13 +49,13 @@
             <input type="hidden" name="_blacklist" value="casino, crypto giveaway, loan offer, adult content, seo backlinks, free money, investment guaranteed" />
             <input type="hidden" name="_autoresponse" value="Thank you for contacting Billal Javed. Your message has been received, and I will review it carefully. If your note is about an analytics opportunity, project collaboration, or professional conversation, I will follow up as soon as possible." />
             <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="form-honey" aria-hidden="true" />
-            <input name="name" placeholder="Name" required />
-            <input name="email" type="email" placeholder="Email" required />
-            <input name="phone" type="tel" placeholder="Phone number" />
+            <input name="name" placeholder="Contact name" required />
+            <input name="email" type="email" placeholder="Email address" required />
+            <input name="phone" type="tel" placeholder="Number" />
             <input name="occupation" placeholder="Occupation" />
-            <input name="company" placeholder="Company / Organization" />
-            <input name="linkedin" placeholder="Optional LinkedIn or profile link" />
-            <input name="subject" placeholder="Subject" required />
+            <input name="company" placeholder="Company" />
+            <input name="linkedin" placeholder="Link / LinkedIn profile" />
+            <input name="subject" placeholder="Email subject" required />
             <select name="reason" required>
               <option value="">Reason for contacting</option>
               <option>Analytics opportunity</option>
@@ -65,20 +65,13 @@
               <option>General message</option>
             </select>
             <fieldset class="checklist-group">
-              <legend>Contact checklist</legend>
+              <legend>Check list</legend>
               <label><input type="checkbox" name="contact_checklist" value="Review portfolio project" /> Review portfolio project</label>
               <label><input type="checkbox" name="contact_checklist" value="Discuss analytics role" /> Discuss analytics role</label>
-              <label><input type="checkbox" name="contact_checklist" value="Schedule follow-up" /> Schedule follow-up</label>
+              <label><input type="checkbox" name="contact_checklist" value="Request follow-up" /> Request follow-up</label>
               <label><input type="checkbox" name="contact_checklist" value="Share feedback" /> Share feedback</label>
             </fieldset>
-            <fieldset class="checklist-group">
-              <legend>Follow-up checklist</legend>
-              <label><input type="checkbox" name="follow_up_checklist" value="Reply by email" /> Reply by email</label>
-              <label><input type="checkbox" name="follow_up_checklist" value="Connect on LinkedIn" /> Connect on LinkedIn</label>
-              <label><input type="checkbox" name="follow_up_checklist" value="Review resume" /> Review resume</label>
-              <label><input type="checkbox" name="follow_up_checklist" value="Discuss project evidence" /> Discuss project evidence</label>
-            </fieldset>
-            <textarea name="message" placeholder="Message or comments" required></textarea>
+            <textarea name="message" placeholder="Email body / message" required></textarea>
             <button class="button primary" type="submit">Send Message</button>
             <p class="form-note" id="contactNote" hidden>Sending your message now.</p>
             <p class="privacy-note">This form sends your message to Billal Javed through a Google Apps Script backend and records the submission in a connected Google Sheet. Local website interaction counts are stored only in this browser for portfolio demonstration and are not presented as global visitor analytics.</p>

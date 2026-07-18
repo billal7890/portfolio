@@ -101,7 +101,7 @@ Current flow:
 - Apps Script emails `billaljaved7@gmail.com`.
 - The visitor is redirected to `thanks.html`.
 - A spam honeypot and blacklist field are included.
-- The form asks for name, email, phone, occupation, company, reason, message, contact checklist, and follow-up checklist.
+- The form asks for contact name, email address, number, occupation, company, link, reason, checklist, email subject, and email body.
 
 The Apps Script code must be pasted into Google Apps Script and deployed as a Web App with **Execute as: Me** and **Who has access: Anyone**.
 
@@ -125,7 +125,7 @@ To connect or repair the spreadsheet/email backend:
 8. Copy the Web App URL.
 9. If Google gives a new Web App URL, update `GOOGLE_SHEETS_WEBHOOK_URL` in `script.js` and the `action` in `contact.html`.
 
-After that, submissions should be emailed to Billal Javed and appended to the `Email_response` tab in the Google Sheet.
+After that, submissions should be emailed to Billal Javed and appended to the `Email_response` tab in the Google Sheet. The Apps Script also creates a professional suggested reply in the `AI reply` column.
 
 ## Privacy Note
 

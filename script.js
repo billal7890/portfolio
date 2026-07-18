@@ -2027,7 +2027,6 @@ function renderAdminLists() {
         ${message.occupation || message.company ? `<p>${escapeHtml(message.occupation || "")} ${message.company ? "/ " + escapeHtml(message.company) : ""}</p>` : ""}
         ${message.linkedin ? `<p><strong>Profile:</strong> ${escapeHtml(message.linkedin)}</p>` : ""}
         ${message.contactChecklist ? `<p><strong>Contact checklist:</strong> ${escapeHtml(message.contactChecklist)}</p>` : ""}
-        ${message.followUpChecklist ? `<p><strong>Follow-up checklist:</strong> ${escapeHtml(message.followUpChecklist)}</p>` : ""}
         <small>${escapeHtml(message.time)}</small>
       </div>
     `).join("")
@@ -2172,7 +2171,6 @@ async function handleContactSubmit(event) {
     reason: data.get("reason"),
     message: data.get("message"),
     contactChecklist: data.getAll("contact_checklist").join(", "),
-    followUpChecklist: data.getAll("follow_up_checklist").join(", "),
     time: timestamp
   });
   state.tracking.contactSubmissions += 1;
@@ -2211,9 +2209,7 @@ async function sendContactToSheet(message) {
         reason: message.reason,
         message: message.message,
         contactChecklist: message.contactChecklist,
-        followUpChecklist: message.followUpChecklist,
         contact_checklist: message.contactChecklist,
-        follow_up_checklist: message.followUpChecklist,
         submission_timestamp: message.time
       }
     })

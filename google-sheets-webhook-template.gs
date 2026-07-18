@@ -32,9 +32,9 @@ function doPost(e) {
   const sheet = getOrCreateSheet_();
   const submittedAt = data.submission_timestamp || new Date().toLocaleString();
   const contactChecklist = normalizeList_(data.contact_checklist || data.contactChecklist);
-  const followUpChecklist = normalizeList_(data.follow_up_checklist || data.followUpChecklist);
   const subject = data.subject || "Portfolio contact submission";
   const message = data.message || "";
+  const aiReply = buildReplyDraft_(data, contactChecklist);
 
   sheet.appendRow([
     data.name || "",
@@ -45,10 +45,9 @@ function doPost(e) {
     data.linkedin || data.link || "",
     data.reason || "",
     contactChecklist,
-    followUpChecklist,
     subject,
     message,
-    buildReplyDraft_(data),
+    aiReply,
     submittedAt
   ]);
 
@@ -56,8 +55,8 @@ function doPost(e) {
     to: TO_EMAIL,
     replyTo: data.email || "",
     subject: "Portfolio contact: " + subject,
-    htmlBody: buildEmailHtml_(data, contactChecklist, followUpChecklist, submittedAt),
-    body: buildEmailText_(data, contactChecklist, followUpChecklist, submittedAt)
+    htmlBody: buildEmailHtml_(data, contactChecklist, aiReply, submittedAt),
+    body: buildEmailText_(data, contactChecklist, aiReply, submittedAt)
   });
 
   return json_({ ok: true });
@@ -87,7 +86,6 @@ function getOrCreateSheet_() {
       "LINK",
       "REASON",
       "CHECK LIST",
-      "Follow-up checklist",
       "Email subject",
       "Email body",
       "AI reply",
@@ -98,7 +96,7 @@ function getOrCreateSheet_() {
   return sheet;
 }
 
-function buildEmailHtml_(data, contactChecklist, followUpChecklist, submittedAt) {
+function buildEmailHtml_(data, contactChecklist, aiReply, submittedAt) {
   return `
     <h2>New portfolio contact submission</h2>
     <table cellpadding="8" cellspacing="0" border="1" style="border-collapse:collapse;font-family:Arial,sans-serif;">
@@ -110,15 +108,15 @@ function buildEmailHtml_(data, contactChecklist, followUpChecklist, submittedAt)
       <tr><th align="left">Profile Link</th><td>${escapeHtml_(data.linkedin || data.link)}</td></tr>
       <tr><th align="left">Reason</th><td>${escapeHtml_(data.reason)}</td></tr>
       <tr><th align="left">Checklist</th><td>${escapeHtml_(contactChecklist)}</td></tr>
-      <tr><th align="left">Follow-up</th><td>${escapeHtml_(followUpChecklist)}</td></tr>
       <tr><th align="left">Subject</th><td>${escapeHtml_(data.subject)}</td></tr>
       <tr><th align="left">Message</th><td>${escapeHtml_(data.message)}</td></tr>
+      <tr><th align="left">Suggested reply</th><td>${escapeHtml_(aiReply)}</td></tr>
       <tr><th align="left">Submitted at</th><td>${escapeHtml_(submittedAt)}</td></tr>
     </table>
   `;
 }
 
-function buildEmailText_(data, contactChecklist, followUpChecklist, submittedAt) {
+function buildEmailText_(data, contactChecklist, aiReply, submittedAt) {
   return [
     "New portfolio contact submission",
     "Name: " + (data.name || ""),
@@ -129,16 +127,24 @@ function buildEmailText_(data, contactChecklist, followUpChecklist, submittedAt)
     "Profile Link: " + (data.linkedin || data.link || ""),
     "Reason: " + (data.reason || ""),
     "Checklist: " + contactChecklist,
-    "Follow-up: " + followUpChecklist,
     "Subject: " + (data.subject || ""),
     "Message: " + (data.message || ""),
+    "Suggested reply: " + aiReply,
     "Submitted at: " + submittedAt
   ].join("\n");
 }
 
-function buildReplyDraft_(data) {
+function buildReplyDraft_(data, contactChecklist) {
   const name = data.name || "there";
-  return `Hi ${name}, thank you for reaching out through my portfolio. I received your message and will review it carefully before following up.`;
+  const reason = String(data.reason || "").toLowerCase();
+  const checklist = String(contactChecklist || "").toLowerCase();
+  const projectLine = checklist.includes("portfolio") || reason.includes("feedback")
+    ? "I appreciate you taking time to review my portfolio and project work."
+    : "I appreciate you reaching out through my portfolio.";
+  const opportunityLine = reason.includes("opportunity") || reason.includes("job") || reason.includes("internship") || checklist.includes("analytics role")
+    ? "I would be glad to discuss how my business analytics, finance, dashboarding, and simulation experience could support your team."
+    : "I will review your note carefully and follow up with a thoughtful response.";
+  return `Hi ${name}, thank you for your message. ${projectLine} ${opportunityLine} Best, Billal`;
 }
 
 function normalizeList_(value) {
@@ -176,7 +182,6 @@ function testWebhook() {
           reason: "Portfolio feedback",
           message: "This is a test row and test email from Apps Script.",
           contactChecklist: "Review portfolio project, Share feedback",
-          followUpChecklist: "Reply by email",
           submission_timestamp: new Date().toLocaleString()
         }
       })
