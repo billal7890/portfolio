@@ -1,5 +1,6 @@
 const STORAGE_KEY = "billalOnePagePortfolioV1";
 document.documentElement.classList.add("js");
+const CONTENT_VERSION = "2026-07-18-business-analytics-resume-alignment";
 const ADMIN_EMAIL = "billaljaved7@gmail.com";
 // Static demo only. Do not use client-side passwords in production; use Firebase/Auth0/Supabase or server-side authentication.
 const ADMIN_PASSWORD = "hello@7890";
@@ -409,26 +410,27 @@ const defaultBlogs = [
 ];
 
 const defaultState = {
+  contentVersion: CONTENT_VERSION,
   homeTitle: "I translate business uncertainty into analytical decisions.",
-  homeIntro: "I am Billal Javed, an M.S. Business Analytics and Information Management graduate student at the University of Delaware. My work connects finance, operations, simulation, data systems, dashboards, and AI-supported analysis to help decision-makers understand what is happening and what to do next.",
-  aboutText: "I bring together an accounting and finance foundation with graduate training in business analytics and information management at the University of Delaware. My work spans data analysis, visualization, simulation, operations, and decision-focused communication.",
+  homeIntro: "I am Billal Javed, an M.S. Business Analytics and Information Management graduate student at the University of Delaware. I connect finance, operations, data systems, dashboards, simulation, and AI-supported tools to turn business questions into clear, decision-ready analysis.",
+  aboutText: "I combine an accounting and finance foundation with graduate training in business analytics and information management. My work focuses on data cleaning, modeling, dashboard development, simulation, financial analysis, and clear communication for business decisions.",
   content: {
-    aboutHeading: "Business analytics, finance, and leadership in practice.",
-    portfolioHeading: "Projects, analytical work, and leadership in practice.",
+    aboutHeading: "Business analytics, financial insight, and practical execution.",
+    portfolioHeading: "Analytics projects, dashboards, simulations, and leadership work.",
     liveSnapshotHeading: "A simple view of how visitors interact with this portfolio.",
     liveSnapshotIntro: "This section reads local website activity and turns it into a small analytics snapshot: visits, clicks, portfolio interest, project likes, blog views, contact submissions, and resume downloads. It is a demo of how raw interaction data can become a readable business signal.",
-    profileStatus: "Expected graduation: December 2026 · Let's discuss how analytics can support your next decision.",
-    aboutKicker: "A business foundation strengthened by analytical thinking.",
-    aboutSecondary: "I approach analytics as a business discipline, not simply a technical exercise. My accounting and finance background helps me understand performance, risk, and commercial context, while graduate work in data systems, visualization, simulation, and AI-supported analysis helps me test ideas and communicate evidence clearly. Experience in housing operations, food service, student leadership, and event coordination has also strengthened the practical side of my work: listening carefully, organizing priorities, collaborating across teams, and following through under pressure.",
-    skillsHeading: "A practical toolkit for analysis, communication, and execution.",
-    skillsIntro: "My skill set combines analytical technology with business understanding, research discipline, and the interpersonal skills required to move work forward.",
-    experienceHeading: "Experience that connects analysis, operations, service, and leadership.",
-    experienceIntro: "Each role has developed a different part of how I work: analytical judgment, operational discipline, customer awareness, collaboration, and ownership.",
+    profileStatus: "Expected graduation: December 2026 · Business analytics, finance, operations, and decision support.",
+    aboutKicker: "A finance foundation expanded through analytics, systems, and simulation.",
+    aboutSecondary: "I approach analytics as a business discipline first. My accounting and finance background helps me understand performance, risk, variance, and commercial context, while my graduate work strengthens the technical side: SQL, Python, Power BI, Tableau, SAS, simulation, data modeling, and unstructured data analysis. I am most interested in work where clean data, thoughtful metrics, and clear storytelling help people make better decisions.",
+    skillsHeading: "A focused toolkit for analytics, reporting, modeling, and business communication.",
+    skillsIntro: "My skills are built around the work I can explain and defend: cleaning data, building dashboards, developing KPIs, analyzing financial and operational signals, modeling uncertainty, and communicating recommendations clearly.",
+    experienceHeading: "Experience that connects operations, service, leadership, and analytical judgment.",
+    experienceIntro: "My roles have strengthened the practical side of analytics: communicating with people, handling pressure, organizing work, tracking information accurately, and translating daily operations into better decisions.",
     housingDescription: "Coordinate front-desk and housing operations, respond to resident needs, support room and maintenance logistics, maintain records, and use Excel and Google Workspace for tracking, audits, and performance reporting.",
     aramarkDescription: "Work in a fast-paced service environment where accuracy, food-safety awareness, teamwork, time management, and clear customer communication directly affect daily performance and the customer experience.",
     gsaDescription: "Coordinate with students, faculty, the BAIM community, and University departments to plan programs that strengthen student engagement and professional development.",
-    internshipDescription: "Performed fundamental and technical analysis across stocks, commodities, and currencies, collaborated with business development, marketing, and finance teams, and helped communicate investment opportunities to prospective investors.",
-    academicHeading: "Education shaping my analytical perspective.",
+    internshipDescription: "Performed fundamental and technical analysis across stocks, commodities, and currencies, supported market research, collaborated with business development, marketing, and finance teams, and helped communicate investment opportunities to prospective investors.",
+    academicHeading: "Education shaping my analytical and financial perspective.",
     mastersDegree: "M.S. Business Analytics and Information Management",
     mastersSchool: "University of Delaware · Expected December 2026",
     mastersDescription: "Graduate coursework connects data architecture, programming, visual analytics, cybersecurity, simulation, and unstructured data analysis with practical business decision-making. The program has strengthened how I move from raw information to structured models, visual evidence, and management-focused recommendations.",
@@ -441,8 +443,8 @@ const defaultState = {
     bachelorsBusinessCourses: "Financial Accounting & Reporting, Cost Accounting, Management Accounting, Audit and Assurance, Business Taxation, Corporate Governance, Business Policy and Strategy, Entrepreneurship",
     workshopHeading: "From Data to Decision: Analytics & Storytelling Workshop",
     workshopIntro: "A four-hour professional development workshop organized through the BAIM Graduate Student Association in collaboration with the University of Delaware Library's Research Data & Design Commons.",
-    workshopRole: "I developed the workshop concept and learning objectives, coordinated with the department and library team, secured the Data Analysis & Visualization Lab, managed registration and communications, selected hands-on datasets, supported event logistics, and facilitated the student experience.",
-    workshopOutcome: "The workshop guided participants through data ethics, storytelling with data, data management, and practical analysis. Students applied the workflow to real-world datasets, shared their findings, and gained an opportunity to earn a LinkedIn-shareable badge recognizing their participation and professional development."
+    workshopRole: "I developed the workshop concept and learning objectives, coordinated with the department and library team, secured the Data Analysis & Visualization Lab, managed registration and communications, selected hands-on datasets, supported event logistics, and helped facilitate the student learning experience.",
+    workshopOutcome: "The workshop introduced data ethics, data storytelling, data management, and applied analysis. Participants worked with real-world datasets, discussed findings, and gained an opportunity to earn a LinkedIn-shareable badge recognizing their professional development."
   },
   skillGroups: [
     { title: "Analytics & Programming", description: "Building, cleaning, testing, and interpreting analytical work.", skills: "Python, SQL, R Studio, SAS, SPSS, SMARTPLS, Google Colab, Data Cleaning, Statistical Analysis, Quantitative Analysis" },
@@ -524,6 +526,14 @@ function loadState() {
   if (parsed.homeTitle === OLD_HOME_TITLE) merged.homeTitle = defaultState.homeTitle;
   if (parsed.homeIntro === OLD_HOME_INTRO) merged.homeIntro = defaultState.homeIntro;
   if ([OLD_ABOUT_TEXT, PREVIOUS_ABOUT_TEXT].includes(parsed.aboutText)) merged.aboutText = defaultState.aboutText;
+  if (parsed.contentVersion !== CONTENT_VERSION) {
+    merged.contentVersion = CONTENT_VERSION;
+    merged.homeTitle = defaultState.homeTitle;
+    merged.homeIntro = defaultState.homeIntro;
+    merged.aboutText = defaultState.aboutText;
+    merged.content = { ...merged.content, ...defaultState.content };
+    merged.skillGroups = defaultState.skillGroups;
+  }
   if (merged.socialLinks.github === OLD_GITHUB_URL) merged.socialLinks.github = DEFAULT_GITHUB_URL;
   ensurePortfolioDashboardFile(merged.projects);
   return merged;
