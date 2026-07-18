@@ -705,11 +705,7 @@ function renderContent() {
 function setupContactRedirect() {
   const redirect = document.getElementById("contactRedirect");
   if (redirect) {
-    const isGitHubPages = window.location.hostname.endsWith("github.io");
-    const returnUrl = isGitHubPages
-      ? "https://billal7890.github.io/portfolio/thanks.html"
-      : new URL("thanks.html", window.location.href).href;
-    redirect.value = returnUrl;
+    redirect.value = "https://billal7890.github.io/portfolio/thanks.html";
   }
   if (new URLSearchParams(window.location.search).get("sent") === "1") {
     const note = document.getElementById("contactNote");
@@ -2180,9 +2176,13 @@ function handleContactSubmit(event) {
   });
   state.tracking.contactSubmissions += 1;
   saveState();
-  document.getElementById("contactNote").hidden = false;
+  const note = document.getElementById("contactNote");
+  if (note) note.hidden = false;
   renderAdmin();
   sendContactToSheet(state.messages[0]);
+  window.setTimeout(() => {
+    window.location.href = "https://billal7890.github.io/portfolio/thanks.html";
+  }, 900);
 }
 
 async function sendContactToSheet(message) {
