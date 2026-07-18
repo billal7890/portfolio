@@ -419,7 +419,7 @@ const defaultState = {
     portfolioHeading: "Analytics projects, dashboards, simulations, and leadership work.",
     liveSnapshotHeading: "A simple view of how visitors interact with this portfolio.",
     liveSnapshotIntro: "This section reads local website activity and turns it into a small analytics snapshot: visits, clicks, portfolio interest, project likes, blog views, contact submissions, and resume downloads. It is a demo of how raw interaction data can become a readable business signal.",
-    profileStatus: "Expected graduation: December 2026 · Business analytics, finance, operations, and decision support.",
+    profileStatus: "Expected graduation: December 2026 · Let's discuss how analytics can support your next decision.",
     aboutKicker: "A business foundation strengthened by analytical thinking.",
     aboutSecondary: "I approach analytics as a business discipline, not simply a technical exercise. My accounting and finance background helps me understand performance, risk, variance, and commercial context, while graduate work in data systems, visualization, simulation, SQL, Python, Power BI, Tableau, SAS, and AI-supported tools helps me test ideas and communicate evidence clearly. Experience in housing operations, food service, student leadership, and event coordination has also strengthened the practical side of my work: listening carefully, organizing priorities, collaborating across teams, and following through under pressure.",
     skillsHeading: "A focused toolkit for analytics, reporting, modeling, and business communication.",
