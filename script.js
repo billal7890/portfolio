@@ -1034,6 +1034,19 @@ function visibleProjects() {
   return state.projects.filter((project) => project.visible !== false).sort((a, b) => compareProjectDates(a.date, b.date));
 }
 
+function globalLabelCount(eventType, label) {
+  const labels = globalAnalytics?.labels || {};
+  return labels[`${eventType}::${label}`] ?? 0;
+}
+
+function getProjectMetric(project, eventType) {
+  return globalLabelCount(eventType, project.id) || globalLabelCount(eventType, project.title) || (eventType === "project_like" ? project.likes || 0 : 0);
+}
+
+function getGlobalTotal(eventType, fallback = 0) {
+  return Number(globalAnalytics?.totals?.[eventType] ?? fallback ?? 0);
+}
+
 function renderFeaturedProjects() {
   const container = document.getElementById("featuredProjects");
   if (!container) return;
@@ -1062,7 +1075,7 @@ function renderPortfolio() {
         <p><strong>Tech:</strong> ${escapeHtml(project.tech)}</p>
         ${project.files?.length ? `<p><strong>Files:</strong> ${project.files.length} attached</p>` : ""}
         <div class="card-actions">
-          <button class="small-button like-button" data-like-project="${project.id}" type="button">♥ ${project.likes || 0}</button>
+          <button class="small-button like-button" data-like-project="${project.id}" type="button">♥ ${getProjectMetric(project, "project_like")}</button>
           <a class="small-button" href="project.html?id=${encodeURIComponent(project.id)}">See More</a>
         </div>
       </div>
@@ -1140,10 +1153,10 @@ function renderHomeDashboardPreview() {
   projects.forEach((project) => {
     String(project.tech).split(",").map((item) => item.trim()).filter(Boolean).forEach((technology) => technologies.add(technology));
   });
-  const engagement = projects.reduce((sum, project) => sum + (project.likes || 0), 0)
-    + Number(state.tracking.portfolioViews || 0)
-    + Number(state.tracking.blogViews || 0)
-    + Number(state.tracking.resumeDownloads || 0);
+  const engagement = getGlobalTotal("project_like", projects.reduce((sum, project) => sum + (project.likes || 0), 0))
+    + getGlobalTotal("project_view", state.tracking.portfolioViews)
+    + getGlobalTotal("blog_view", state.tracking.blogViews)
+    + getGlobalTotal("resume_download", state.tracking.resumeDownloads);
   container.innerHTML = `
     <span><strong>${projects.length}</strong><small>Projects</small></span>
     <span><strong>${technologies.size}</strong><small>Tools &amp; methods</small></span>
@@ -1197,18 +1210,21 @@ function renderPortfolioDashboard() {
   })).filter((item) => item.count);
   const maxCategory = Math.max(1, ...categoryCounts.map((item) => item.count));
   const maxTechnology = Math.max(1, ...technologies.map((item) => item[1]));
-  const totalLikes = filtered.reduce((sum, project) => sum + (project.likes || 0), 0);
-  const projectViews = Number(state.tracking.portfolioViews || 0);
-  const engagementTotal = totalLikes + Number(state.tracking.blogViews || 0) + Number(state.tracking.resumeDownloads || 0) + Number(state.tracking.contactForms || 0);
+  const totalLikes = getGlobalTotal("project_like", filtered.reduce((sum, project) => sum + (project.likes || 0), 0));
+  const projectViews = getGlobalTotal("project_view", state.tracking.portfolioViews);
+  const blogViews = getGlobalTotal("blog_view", state.tracking.blogViews);
+  const resumeDownloads = getGlobalTotal("resume_download", state.tracking.resumeDownloads);
+  const contactSubmissions = getGlobalTotal("contact_submission", state.tracking.contactSubmissions);
+  const engagementTotal = totalLikes + blogViews + resumeDownloads + contactSubmissions;
   const likeShare = engagementTotal ? Math.round((totalLikes / engagementTotal) * 100) : 0;
-  const blogShare = engagementTotal ? Math.round((Number(state.tracking.blogViews || 0) / engagementTotal) * 100) : 0;
+  const blogShare = engagementTotal ? Math.round((blogViews / engagementTotal) * 100) : 0;
 
   root.innerHTML = `
     <section class="dashboard-kpi-grid">
       <article><span>Projects shown</span><strong>${filtered.length}</strong><small>of ${visible.length} visible projects</small></article>
       <article><span>Technology references</span><strong>${technologies.length}</strong><small>unique tools and methods</small></article>
       <article><span>Project likes</span><strong>${totalLikes}</strong><small>for the current selection</small></article>
-      <article><span>Portfolio views</span><strong>${projectViews}</strong><small>recorded in this browser</small></article>
+      <article><span>Portfolio views</span><strong>${projectViews}</strong><small>global project report opens</small></article>
     </section>
     <section class="portfolio-dashboard-grid">
       <article class="dashboard-panel dashboard-span-2">
@@ -1230,8 +1246,8 @@ function renderPortfolioDashboard() {
         </div>
         <div class="dashboard-legend">
           <span><i class="legend-likes"></i>Likes ${totalLikes}</span>
-          <span><i class="legend-blogs"></i>Blog views ${state.tracking.blogViews || 0}</span>
-          <span><i class="legend-other"></i>Other ${Math.max(0, engagementTotal - totalLikes - (state.tracking.blogViews || 0))}</span>
+          <span><i class="legend-blogs"></i>Blog views ${blogViews}</span>
+          <span><i class="legend-other"></i>Other ${Math.max(0, engagementTotal - totalLikes - blogViews)}</span>
         </div>
       </article>
       <article class="dashboard-panel">
@@ -1254,7 +1270,7 @@ function renderPortfolioDashboard() {
       <div class="dashboard-table-scroll">
         <table>
           <thead><tr><th>Project</th><th>Category</th><th>Year</th><th>Tools</th><th>Likes</th><th>Report</th></tr></thead>
-          <tbody>${filtered.map((project) => `<tr><td><strong>${escapeHtml(project.title)}</strong><small>${escapeHtml(project.summary)}</small></td><td>${escapeHtml(project.category)}</td><td>${escapeHtml(project.date)}</td><td>${escapeHtml(project.tech)}</td><td>${project.likes || 0}</td><td><a href="project.html?id=${encodeURIComponent(project.id)}">View</a></td></tr>`).join("")}</tbody>
+          <tbody>${filtered.map((project) => `<tr><td><strong>${escapeHtml(project.title)}</strong><small>${escapeHtml(project.summary)}</small></td><td>${escapeHtml(project.category)}</td><td>${escapeHtml(project.date)}</td><td>${escapeHtml(project.tech)}</td><td>${getProjectMetric(project, "project_like")}</td><td><a href="project.html?id=${encodeURIComponent(project.id)}">View</a></td></tr>`).join("")}</tbody>
         </table>
       </div>
     </section>
@@ -1304,7 +1320,7 @@ function renderBlogArticle() {
   blog.views = (blog.views || 0) + 1;
   state.tracking.blogViews += 1;
   saveState();
-  trackGlobalInteraction("blog_view", blog.title);
+  trackGlobalInteraction("blog_view", blog.id);
   const article = blog.article || {
     abstract: blog.preview,
     readingTime: "4 minute read",
@@ -1354,7 +1370,7 @@ function openProjectModal(id) {
     document.body.dataset.projectViewed = project.id;
     state.tracking.portfolioViews += 1;
     saveState();
-    trackGlobalInteraction("project_view", project.title);
+    trackGlobalInteraction("project_view", project.id);
   }
   openModal(`
     <div class="modal-inner">
@@ -1386,7 +1402,7 @@ function renderProjectReport() {
     document.body.dataset.projectViewed = project.id;
     state.tracking.portfolioViews += 1;
     saveState();
-    trackGlobalInteraction("project_view", project.title);
+    trackGlobalInteraction("project_view", project.id);
   }
   document.title = `${project.title} | Billal Javed`;
   container.innerHTML = `
@@ -1396,7 +1412,7 @@ function renderProjectReport() {
       <h1>${escapeHtml(project.title)}</h1>
       <p>${escapeHtml(project.summary)}</p>
       <div class="report-actions">
-        <button class="button secondary like-button" data-like-project="${project.id}" type="button">♥ ${project.likes || 0}</button>
+        <button class="button secondary like-button" data-like-project="${project.id}" type="button">♥ ${getProjectMetric(project, "project_like")}</button>
         ${project.link ? `<a class="button primary" href="${escapeHtml(project.link)}" target="_blank" rel="noreferrer">Open Project Link</a>` : ""}
       </div>
     </section>
@@ -1980,7 +1996,7 @@ function renderAdminLists() {
   if (projectList) projectList.innerHTML = state.projects.map((project) => `
     <div class="message-card">
       <strong>${escapeHtml(project.title)}</strong>
-      <p>${project.visible === false ? "Hidden" : "Visible"} / ${project.likes || 0} likes</p>
+      <p>${project.visible === false ? "Hidden" : "Visible"} / ${getProjectMetric(project, "project_like")} likes</p>
       <div class="card-actions">
         <button class="small-button" data-admin-edit-project="${project.id}" type="button">Edit</button>
         <button class="small-button" data-admin-toggle-project="${project.id}" type="button">${project.visible === false ? "Show" : "Hide"}</button>
@@ -2054,7 +2070,7 @@ function attachEvents() {
   document.addEventListener("click", (event) => {
     state.tracking.clicks += 1;
     saveState();
-    trackGlobalInteraction("click", event.target?.textContent?.trim() || event.target?.ariaLabel || event.target?.tagName || "page click");
+    trackGlobalInteraction("click", getClickLabel(event));
     renderPublicAnalytics();
     renderAdminStats();
 
@@ -2145,7 +2161,7 @@ function likeProject(id) {
   project.likes = (project.likes || 0) + 1;
   state.tracking.projectLikes += 1;
   saveState();
-  trackGlobalInteraction("project_like", project.title);
+  trackGlobalInteraction("project_like", project.id);
   renderPortfolio();
   renderFeaturedProjects();
   renderProjectReport();
@@ -2688,6 +2704,33 @@ function trackAction(name) {
   trackGlobalInteraction("section_visit", name);
 }
 
+function getClickLabel(event) {
+  const target = event.target;
+  const link = target.closest?.("a");
+  const button = target.closest?.("button");
+  const projectLike = target.closest?.("[data-like-project]");
+  const projectMore = target.closest?.("[data-project-more]");
+  const blogMore = target.closest?.("[data-blog-more]");
+  if (projectLike) return `project_like_button:${projectLike.dataset.likeProject}`;
+  if (projectMore) return `project_more:${projectMore.dataset.projectMore}`;
+  if (blogMore) return `blog_more:${blogMore.dataset.blogMore}`;
+  if (link?.dataset?.pageLink) return `nav:${link.dataset.pageLink}`;
+  if (link?.classList?.contains("resume-download")) return "resume_download_link";
+  if (link?.href) return `link:${new URL(link.href, location.href).pathname}`;
+  if (button?.dataset?.adminTab) return `admin_tab:${button.dataset.adminTab}`;
+  if (button?.textContent) return `button:${button.textContent.trim().slice(0, 48)}`;
+  return target?.tagName ? `element:${target.tagName.toLowerCase()}` : "page_click";
+}
+
+function bumpGlobalMetric(eventType, label = "") {
+  if (!globalAnalytics) globalAnalytics = { ok: true, totals: {}, labels: {} };
+  globalAnalytics.totals[eventType] = (globalAnalytics.totals[eventType] || 0) + 1;
+  if (label) {
+    const key = `${eventType}::${label}`;
+    globalAnalytics.labels[key] = (globalAnalytics.labels[key] || 0) + 1;
+  }
+}
+
 function attachSectionTracking() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -2717,6 +2760,7 @@ function attachRevealObserver() {
 
 function trackGlobalInteraction(eventType, label = "") {
   if (!GOOGLE_SHEETS_WEBHOOK_URL || ADMIN_PREVIEW_MODE || !globalAnalyticsReady) return;
+  bumpGlobalMetric(eventType, label);
   try {
     fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
       method: "POST",
@@ -2740,7 +2784,7 @@ function trackGlobalInteraction(eventType, label = "") {
 }
 
 function loadGlobalAnalytics() {
-  if (!GOOGLE_SHEETS_WEBHOOK_URL || !document.getElementById("adminStats") && !document.getElementById("publicAnalytics")) return;
+  if (!GOOGLE_SHEETS_WEBHOOK_URL) return;
   window[GLOBAL_ANALYTICS_CALLBACK] = (data) => {
     globalAnalytics = data || null;
     globalAnalyticsReady = Boolean(data?.ok);
@@ -2748,8 +2792,14 @@ function loadGlobalAnalytics() {
       document.body.dataset.globalPageViewSent = "true";
       trackGlobalInteraction("page_view", document.body.dataset.page || location.pathname);
     }
-    renderAdminStats();
+    renderFeaturedProjects();
+    renderPortfolio();
+    renderHomeDashboardPreview();
+    renderPortfolioDashboard();
+    renderProjectReport();
+    renderAdmin();
     renderPublicAnalytics();
+    attachRevealObserver();
   };
   const script = document.createElement("script");
   script.src = `${GOOGLE_SHEETS_WEBHOOK_URL}?action=analytics&callback=${GLOBAL_ANALYTICS_CALLBACK}&t=${Date.now()}`;
@@ -2761,8 +2811,8 @@ function loadGlobalAnalytics() {
 try {
   state.tracking.pageViews += 1;
   saveState();
-  loadGlobalAnalytics();
   renderContent();
+  loadGlobalAnalytics();
   attachEvents();
   attachSectionTracking();
   attachRevealObserver();
@@ -2775,3 +2825,4 @@ try {
   fallback.innerHTML = "<h1>Portfolio recovered</h1><p>The site reset saved demo data after a browser storage issue. Please refresh the page once.</p>";
   document.body.prepend(fallback);
 }
+

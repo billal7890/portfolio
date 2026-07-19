@@ -20,6 +20,7 @@
 const SHEET_ID = "1c5W6a5iPO9FvLJymVA6wwM1PIv-Js-ifm3Q_bcESOPc";
 const SHEET_NAME = "Portfolio Contacts";
 const ANALYTICS_SHEET_NAME = "Portfolio Analytics";
+const ANALYTICS_SUMMARY_SHEET_NAME = "Portfolio Analytics Summary";
 const TO_EMAIL = "billaljaved7@gmail.com";
 
 const HEADERS = [
@@ -96,6 +97,7 @@ function doGet(e) {
   const callback = e && e.parameter && e.parameter.callback;
   if (action === "analytics") {
     const summary = getAnalyticsSummary_();
+    updateAnalyticsSummarySheet_(summary);
     if (callback) {
       return ContentService
         .createTextOutput(callback + "(" + JSON.stringify(summary) + ");")
@@ -155,7 +157,9 @@ function recordAnalytics_(event) {
     event.referrer || "",
     event.user_agent || ""
   ]);
-  return json_({ ok: true, type: "analytics" });
+  const summary = getAnalyticsSummary_();
+  updateAnalyticsSummarySheet_(summary);
+  return json_({ ok: true, type: "analytics", summary });
 }
 
 function getAnalyticsSummary_() {
@@ -180,6 +184,32 @@ function getAnalyticsSummary_() {
     totalEvents: Math.max(0, values.length - 1),
     updatedAt: new Date().toLocaleString()
   };
+}
+
+function updateAnalyticsSummarySheet_(summary) {
+  const spreadsheet = SpreadsheetApp.openById(SHEET_ID);
+  let sheet = spreadsheet.getSheetByName(ANALYTICS_SUMMARY_SHEET_NAME);
+  if (!sheet) sheet = spreadsheet.insertSheet(ANALYTICS_SUMMARY_SHEET_NAME);
+  sheet.clearContents();
+  const rows = [
+    ["Metric", "Count", "Updated at"],
+    ["Total events", summary.totalEvents || 0, summary.updatedAt],
+    ["Page views", summary.totals.page_view || 0, summary.updatedAt],
+    ["Clicks", summary.totals.click || 0, summary.updatedAt],
+    ["Section visits", summary.totals.section_visit || 0, summary.updatedAt],
+    ["Project views", summary.totals.project_view || 0, summary.updatedAt],
+    ["Project likes", summary.totals.project_like || 0, summary.updatedAt],
+    ["Blog views", summary.totals.blog_view || 0, summary.updatedAt],
+    ["Resume downloads", summary.totals.resume_download || 0, summary.updatedAt],
+    ["Contact submissions", summary.totals.contact_submission || 0, summary.updatedAt],
+    ["", "", ""],
+    ["Event type", "Label", "Count"]
+  ];
+  Object.keys(summary.labels || {}).sort().forEach((key) => {
+    const parts = key.split("::");
+    rows.push([parts[0] || "", parts.slice(1).join("::") || "", summary.labels[key] || 0]);
+  });
+  sheet.getRange(1, 1, rows.length, 3).setValues(rows);
 }
 
 function buildEmailHtml_(data, aiReply, submittedAt) {
