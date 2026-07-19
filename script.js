@@ -69,14 +69,7 @@ const defaultProjects = [
     likes: 0,
     image: "assets/project-airport-security.svg",
     dashboard: true,
-    files: [
-      {
-        name: "Airport Security Final Project Package",
-        type: "application/zip",
-        data: "assets/Airport_Security_Final_Project (1).zip",
-        note: "Project archive with the airport security simulation materials and supporting analysis."
-      }
-    ]
+    files: []
   },
   {
     id: "student-habits-performance-powerbi",
