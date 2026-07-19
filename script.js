@@ -18,9 +18,12 @@ const OLD_HOME_INTRO = "I am Billal Javed, an M.S. Business Analytics and Inform
 const OLD_ABOUT_TEXT = "I come from an accounting and finance background, and I am building that foundation into business analytics, operations, data visualization, simulation, and AI-supported decision-making. At the University of Delaware, I am learning how to turn complex business questions into structured analysis and useful decisions.";
 const PREVIOUS_ABOUT_TEXT = "My background started in accounting and finance, and I am now building that foundation into business analytics, information management, operations analysis, simulation, and data visualization. At the University of Delaware, I focus on turning complex business problems into structured analysis, clear communication, and practical recommendations.";
 const GOOGLE_SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbztLjra2v8Pbt3rHpJ7XOCbSlpUDMSZ-vEByH72_1GKFuRPvZBUUj-oxp6LUJj2wywZHQ/exec";
+const GLOBAL_ANALYTICS_CALLBACK = "__billalPortfolioAnalytics";
 let cropImage = null;
 let croppedProfileData = "";
 let activePreviewElement = null;
+let globalAnalytics = null;
+let globalAnalyticsReady = false;
 
 const defaultProjects = [
   {
@@ -1301,6 +1304,7 @@ function renderBlogArticle() {
   blog.views = (blog.views || 0) + 1;
   state.tracking.blogViews += 1;
   saveState();
+  trackGlobalInteraction("blog_view", blog.title);
   const article = blog.article || {
     abstract: blog.preview,
     readingTime: "4 minute read",
@@ -1350,6 +1354,7 @@ function openProjectModal(id) {
     document.body.dataset.projectViewed = project.id;
     state.tracking.portfolioViews += 1;
     saveState();
+    trackGlobalInteraction("project_view", project.title);
   }
   openModal(`
     <div class="modal-inner">
@@ -1381,6 +1386,7 @@ function renderProjectReport() {
     document.body.dataset.projectViewed = project.id;
     state.tracking.portfolioViews += 1;
     saveState();
+    trackGlobalInteraction("project_view", project.title);
   }
   document.title = `${project.title} | Billal Javed`;
   container.innerHTML = `
@@ -1850,35 +1856,37 @@ function renderTextEditor() {
 function renderAdminStats() {
   const totalLikes = state.projects.reduce((sum, project) => sum + (project.likes || 0), 0);
   const sectionVisits = Object.values(state.tracking.sectionVisits || {}).reduce((sum, count) => sum + count, 0);
+  const global = globalAnalytics?.totals || {};
   const stats = [
-    ["Section visits", sectionVisits],
-    ["Project likes", totalLikes],
-    ["Contact forms", state.tracking.contactSubmissions],
-    ["Blog views", state.tracking.blogViews],
-    ["Portfolio views", state.tracking.portfolioViews],
-    ["Resume downloads", state.tracking.resumeDownloads],
-    ["Clicks", state.tracking.clicks],
-    ["Page views", state.tracking.pageViews]
+    ["Section visits", global.section_visit ?? sectionVisits],
+    ["Project likes", global.project_like ?? totalLikes],
+    ["Contact forms", global.contact_submission ?? state.tracking.contactSubmissions],
+    ["Blog views", global.blog_view ?? state.tracking.blogViews],
+    ["Portfolio views", global.project_view ?? state.tracking.portfolioViews],
+    ["Resume downloads", global.resume_download ?? state.tracking.resumeDownloads],
+    ["Clicks", global.click ?? state.tracking.clicks],
+    ["Page views", global.page_view ?? state.tracking.pageViews]
   ];
   const container = document.getElementById("adminStats");
   if (!container) return;
   const max = Math.max(...stats.map(([, value]) => value || 0), 1);
   container.innerHTML = stats.map(([label, value]) => `
     <div class="admin-card"><span>${label}</span><strong>${value || 0}</strong><b class="admin-stat-bar" style="--stat:${((value || 0) / max) * 100}%"></b></div>
-  `).join("");
+  `).join("") + `<p class="privacy-note">${globalAnalytics ? "Showing global website activity recorded in Google Sheets." : "Showing local browser activity until the Google Sheets analytics summary loads."}</p>`;
 }
 
 function renderPublicAnalytics() {
   const container = document.getElementById("publicAnalytics");
   if (!container) return;
   const totalLikes = state.projects.reduce((sum, project) => sum + (project.likes || 0), 0);
+  const global = globalAnalytics?.totals || {};
   const stats = [
-    ["Page Views", state.tracking.pageViews || 0],
-    ["Clicks", state.tracking.clicks || 0],
-    ["Project Views", state.tracking.portfolioViews || 0],
-    ["Likes", totalLikes || 0],
-    ["Resume Downloads", state.tracking.resumeDownloads || 0],
-    ["Contact Messages", state.tracking.contactSubmissions || 0]
+    ["Page Views", global.page_view ?? state.tracking.pageViews ?? 0],
+    ["Clicks", global.click ?? state.tracking.clicks ?? 0],
+    ["Project Views", global.project_view ?? state.tracking.portfolioViews ?? 0],
+    ["Likes", global.project_like ?? totalLikes ?? 0],
+    ["Resume Downloads", global.resume_download ?? state.tracking.resumeDownloads ?? 0],
+    ["Contact Messages", global.contact_submission ?? state.tracking.contactSubmissions ?? 0]
   ];
   const max = Math.max(...stats.map(([, value]) => value), 1);
   container.innerHTML = `
@@ -2046,6 +2054,7 @@ function attachEvents() {
   document.addEventListener("click", (event) => {
     state.tracking.clicks += 1;
     saveState();
+    trackGlobalInteraction("click", event.target?.textContent?.trim() || event.target?.ariaLabel || event.target?.tagName || "page click");
     renderPublicAnalytics();
     renderAdminStats();
 
@@ -2136,6 +2145,7 @@ function likeProject(id) {
   project.likes = (project.likes || 0) + 1;
   state.tracking.projectLikes += 1;
   saveState();
+  trackGlobalInteraction("project_like", project.title);
   renderPortfolio();
   renderFeaturedProjects();
   renderProjectReport();
@@ -2146,6 +2156,7 @@ function likeProject(id) {
 function handleResumeDownload(event) {
   state.tracking.resumeDownloads += 1;
   saveState();
+  trackGlobalInteraction("resume_download", event?.target?.getAttribute("href") || "resume");
   renderAdminStats();
 }
 
@@ -2173,6 +2184,7 @@ async function handleContactSubmit(event) {
   });
   state.tracking.contactSubmissions += 1;
   saveState();
+  trackGlobalInteraction("contact_submission", data.get("reason") || "contact form");
   const note = document.getElementById("contactNote");
   if (note) {
     note.textContent = "Sending your message now.";
@@ -2673,6 +2685,7 @@ function trackAction(name) {
   state.tracking.clicks += 1;
   state.tracking.sectionVisits[name] = (state.tracking.sectionVisits[name] || 0) + 1;
   saveState();
+  trackGlobalInteraction("section_visit", name);
 }
 
 function attachSectionTracking() {
@@ -2683,6 +2696,7 @@ function attachSectionTracking() {
       if (!id) return;
       state.tracking.sectionVisits[id] = (state.tracking.sectionVisits[id] || 0) + 1;
       saveState();
+      trackGlobalInteraction("section_visit", id);
       document.querySelectorAll("[data-section-link]").forEach((link) => {
         link.classList.toggle("active", link.dataset.sectionLink === id);
       });
@@ -2701,9 +2715,53 @@ function attachRevealObserver() {
   document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
 }
 
+function trackGlobalInteraction(eventType, label = "") {
+  if (!GOOGLE_SHEETS_WEBHOOK_URL || ADMIN_PREVIEW_MODE || !globalAnalyticsReady) return;
+  try {
+    fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify({
+        analytics_event: {
+          event_type: eventType,
+          label: String(label || "").slice(0, 180),
+          page: document.body.dataset.page || "",
+          path: location.pathname,
+          url: location.href,
+          timestamp: new Date().toLocaleString(),
+          referrer: document.referrer || "",
+          user_agent: navigator.userAgent || ""
+        }
+      })
+    });
+  } catch (error) {
+    console.warn("Global analytics event was not sent.", error);
+  }
+}
+
+function loadGlobalAnalytics() {
+  if (!GOOGLE_SHEETS_WEBHOOK_URL || !document.getElementById("adminStats") && !document.getElementById("publicAnalytics")) return;
+  window[GLOBAL_ANALYTICS_CALLBACK] = (data) => {
+    globalAnalytics = data || null;
+    globalAnalyticsReady = Boolean(data?.ok);
+    if (globalAnalyticsReady && !document.body.dataset.globalPageViewSent) {
+      document.body.dataset.globalPageViewSent = "true";
+      trackGlobalInteraction("page_view", document.body.dataset.page || location.pathname);
+    }
+    renderAdminStats();
+    renderPublicAnalytics();
+  };
+  const script = document.createElement("script");
+  script.src = `${GOOGLE_SHEETS_WEBHOOK_URL}?action=analytics&callback=${GLOBAL_ANALYTICS_CALLBACK}&t=${Date.now()}`;
+  script.async = true;
+  script.onerror = () => console.warn("Global analytics summary was not loaded.");
+  document.head.appendChild(script);
+}
+
 try {
   state.tracking.pageViews += 1;
   saveState();
+  loadGlobalAnalytics();
   renderContent();
   attachEvents();
   attachSectionTracking();

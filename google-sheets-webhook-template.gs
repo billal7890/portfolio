@@ -4,6 +4,7 @@
   What it does:
   - Records each contact form submission in the Portfolio Contacts sheet tab.
   - Sends an email notification to Billal Javed.
+  - Records website interaction events in the Portfolio Analytics sheet tab.
 
   Deploy settings:
   1. Open the Google Sheet.
@@ -18,6 +19,7 @@
 
 const SHEET_ID = "1c5W6a5iPO9FvLJymVA6wwM1PIv-Js-ifm3Q_bcESOPc";
 const SHEET_NAME = "Portfolio Contacts";
+const ANALYTICS_SHEET_NAME = "Portfolio Analytics";
 const TO_EMAIL = "billaljaved7@gmail.com";
 
 const HEADERS = [
@@ -34,6 +36,17 @@ const HEADERS = [
   "AI REPLY"
 ];
 
+const ANALYTICS_HEADERS = [
+  "TIMESTAMP",
+  "EVENT TYPE",
+  "LABEL",
+  "PAGE",
+  "PATH",
+  "URL",
+  "REFERRER",
+  "USER AGENT"
+];
+
 function doPost(e) {
   if (!e || !e.postData) {
     return json_({
@@ -43,6 +56,10 @@ function doPost(e) {
   }
 
   const data = parsePayload_(e);
+  if (data.analytics_event || data.event_type) {
+    return recordAnalytics_(data.analytics_event || data);
+  }
+
   const sheet = getOrCreateSheet_();
   const submittedAt = data.submission_timestamp || new Date().toLocaleString();
   const subject = data.subject || "Portfolio contact submission";
@@ -74,6 +91,21 @@ function doPost(e) {
   return json_({ ok: true });
 }
 
+function doGet(e) {
+  const action = e && e.parameter && e.parameter.action;
+  const callback = e && e.parameter && e.parameter.callback;
+  if (action === "analytics") {
+    const summary = getAnalyticsSummary_();
+    if (callback) {
+      return ContentService
+        .createTextOutput(callback + "(" + JSON.stringify(summary) + ");")
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
+    return json_(summary);
+  }
+  return json_({ ok: true, message: "Portfolio webhook is active." });
+}
+
 function parsePayload_(e) {
   try {
     const payload = JSON.parse(e.postData.contents || "{}");
@@ -95,6 +127,59 @@ function getOrCreateSheet_() {
   }
 
   return sheet;
+}
+
+function getOrCreateAnalyticsSheet_() {
+  const spreadsheet = SpreadsheetApp.openById(SHEET_ID);
+  let sheet = spreadsheet.getSheetByName(ANALYTICS_SHEET_NAME);
+  if (!sheet) sheet = spreadsheet.insertSheet(ANALYTICS_SHEET_NAME);
+
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(ANALYTICS_HEADERS);
+  } else {
+    sheet.getRange(1, 1, 1, ANALYTICS_HEADERS.length).setValues([ANALYTICS_HEADERS]);
+  }
+
+  return sheet;
+}
+
+function recordAnalytics_(event) {
+  const sheet = getOrCreateAnalyticsSheet_();
+  sheet.appendRow([
+    event.timestamp || new Date().toLocaleString(),
+    event.event_type || "",
+    event.label || "",
+    event.page || "",
+    event.path || "",
+    event.url || "",
+    event.referrer || "",
+    event.user_agent || ""
+  ]);
+  return json_({ ok: true, type: "analytics" });
+}
+
+function getAnalyticsSummary_() {
+  const sheet = getOrCreateAnalyticsSheet_();
+  const values = sheet.getDataRange().getValues();
+  const totals = {};
+  const labels = {};
+  for (let i = 1; i < values.length; i += 1) {
+    const eventType = values[i][1];
+    const label = values[i][2];
+    if (!eventType) continue;
+    totals[eventType] = (totals[eventType] || 0) + 1;
+    if (label) {
+      const key = eventType + "::" + label;
+      labels[key] = (labels[key] || 0) + 1;
+    }
+  }
+  return {
+    ok: true,
+    totals,
+    labels,
+    totalEvents: Math.max(0, values.length - 1),
+    updatedAt: new Date().toLocaleString()
+  };
 }
 
 function buildEmailHtml_(data, aiReply, submittedAt) {
@@ -175,6 +260,25 @@ function testWebhook() {
           reason: "Portfolio feedback",
           message: "This is a test row and test email from Apps Script.",
           submission_timestamp: new Date().toLocaleString()
+        }
+      })
+    }
+  };
+
+  return doPost(fakeEvent);
+}
+
+function testAnalytics() {
+  const fakeEvent = {
+    postData: {
+      contents: JSON.stringify({
+        analytics_event: {
+          event_type: "page_view",
+          label: "Apps Script test",
+          page: "test",
+          path: "/test",
+          url: "https://billal7890.github.io/portfolio/",
+          timestamp: new Date().toLocaleString()
         }
       })
     }
